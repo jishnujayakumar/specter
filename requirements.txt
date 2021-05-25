@@ -8,3 +8,4 @@ dill
 jsonlines
 pandas
 sklearn
+ijson
