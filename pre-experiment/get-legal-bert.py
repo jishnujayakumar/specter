@@ -2,7 +2,6 @@ import os
 import tarfile
 import logging
 from transformers import AutoTokenizer, AutoModel
-from transformers.utils.dummy_tokenizers_objects import BertTokenizerFast
 
 
 logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.DEBUG)
@@ -57,8 +56,7 @@ def prepareLegalBertArtifacts(model):
     os.system(f"rm -rf {filename}/")
 
 
-
 if __name__ == "__main__":
-    for model in ["nlpaueb/legal-bert-small-uncased", 
-                "nlpaueb/legal-bert-base-uncased"]:
+    for model in ["nlpaueb/legal-bert-small-uncased",
+                  "nlpaueb/legal-bert-base-uncased"]:
         prepareLegalBertArtifacts(model)
