@@ -5,6 +5,9 @@ from transformers import AutoTokenizer, AutoModel
 from transformers.utils.dummy_tokenizers_objects import BertTokenizerFast
 
 
+logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.DEBUG)
+
+
 def saveTarGZ(filename):
     """
     Save to tar.gz
@@ -59,6 +62,3 @@ if __name__ == "__main__":
     for model in ["nlpaueb/legal-bert-small-uncased", 
                 "nlpaueb/legal-bert-base-uncased"]:
         prepareLegalBertArtifacts(model)
-
-# 1. Download legal-Bert -> config, model.bin, vocab.txt
-# 2. tar it
