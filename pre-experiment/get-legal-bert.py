@@ -47,7 +47,7 @@ def prepareLegalBertArtifacts(model):
 
     logging.info("Placing files in proper directory")
     os.system(f"find {filename} -type f ! -name 'vocab.txt' -delete && \
-        mv {filename}.tar.gz {filename}/")
+        mv legalbert.tar.gz {filename}/")
 
 
 if __name__ == "__main__":
