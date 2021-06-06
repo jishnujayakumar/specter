@@ -12,7 +12,8 @@ def saveTarGZ(filename):
     Save to tar.gz
     """
     tar = tarfile.open(f"{filename}.tar.gz", "w:gz")
-    for name in ["config.json", "pytorch_model.bin", "vocab.txt"]:
+    os.system(f"mv ./{filename}/config.json ./{filename}/bert_config.json")
+    for name in ["bert_config.json", "pytorch_model.bin", "vocab.txt"]:
         tar.add(f"./{filename}/{name}")
     tar.close()
 
