@@ -7,17 +7,6 @@ from transformers import AutoTokenizer, AutoModel
 logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.INFO)
 
 
-def saveTarGZ(filename):
-    """
-    Save to tar.gz
-    """
-    tar = tarfile.open(f"{filename}.tar.gz", "w:gz")
-    os.system(f"mv ./{filename}/config.json ./{filename}/bert_config.json")
-    for name in ["bert_config.json", "pytorch_model.bin", "vocab.txt"]:
-        tar.add(f"{name}")
-    tar.close()
-
-
 def saveToDisk(transformerObj, filename):
     """
     Saves transformer objects like model, tokenizer to disk
@@ -43,7 +32,8 @@ def prepareLegalBertArtifacts(model):
         saveToDisk(artifact, filename)
 
     logging.info(f"Saving to {filename}.tar.gz")
-    saveTarGZ(filename)
+    os.system(f"mv ./{filename}/config.json ./{filename}/bert_config.json && \
+        tar -czf {filename}.tar.gz {filename}")
 
     logging.info("Placing files in proper directory")
     os.system(f"find {filename} -type f ! -name 'vocab.txt' -delete && \
