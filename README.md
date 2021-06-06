@@ -1,14 +1,16 @@
-# To generate sample data [Output dir: pre-experiment/generated\_data]
+## ADAPTATION TO LEGAL ANALYTICS
+### To generate sample data
 ```bash
 cd pre-experiment/
 python3 generate-sample-data.py <total-number-of-samples>
 ```
-
-# To get legal-bert [Output will be saved in pre-experiment/ directory] 
+- Output directory: **pre-experiment/generated\_data**
+### To get legal-bert
 ```bash
 cd pre-experiment/
 python3 get-legal-bert.py
 ```
+- Output will be saved in **pre-experiment/** directory
 ![plot](https://i.ibb.co/3TC1WmG/specter-logo-cropped.png)
 
 # SPECTER: Document-level Representation Learning using Citation-informed Transformers
