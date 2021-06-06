@@ -45,7 +45,7 @@ def init_logger(*, fn=None):
 
 bert_params = {
     "do_lowercase": "true",
-    "pretrained_model": "data/scivocab_scivocab_uncased/vocab.txt",
+    "pretrained_model": "pre-experiment/nlpaueb-legal-bert-small-uncased/vocab.txt",
     "use_starting_offsets": "true"
 }
 
