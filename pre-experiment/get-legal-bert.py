@@ -6,7 +6,6 @@ from transformers import AutoTokenizer, AutoModel
 
 logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.DEBUG)
 
-
 def saveTarGZ(filename):
     """
     Save to tar.gz
@@ -52,7 +51,7 @@ def prepareLegalBertArtifacts(model):
     logging.info(f"Saving to {filename}.tar.gz")
     saveTarGZ(filename)
 
-    logging.info("Deleting {filename} directory")
+    logging.info(f"Deleting {filename} directory")
     os.system(f"rm -rf {filename}/")
 
 
