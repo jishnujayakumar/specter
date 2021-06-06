@@ -4,7 +4,8 @@ import logging
 from transformers import AutoTokenizer, AutoModel
 
 
-logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.DEBUG)
+logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.INFO)
+
 
 def saveTarGZ(filename):
     """
@@ -28,7 +29,7 @@ def prepareLegalBertArtifacts(model):
     Prepare compressed legalBert artifacts as present in
     scibert.tar.gz (from: archive.tar.gz)
     """
-    logging.info(f"Retrieving {model}'s' tokenizer")
+    logging.info(f"Retrieving {model}'s tokenizer")
     tokenizer = AutoTokenizer.from_pretrained(model)
 
     logging.info(f"Retrieving {model}'s model")
@@ -40,19 +41,12 @@ def prepareLegalBertArtifacts(model):
     for artifact in [mdl, tokenizer]:
         saveToDisk(artifact, filename)
 
-    """
-    Uncomment to try out raw download of vocab.txt
-    """
-    # for category in ["small", "base"]:
-    #     logging.info(f"Downloading {category}: vocab.txt")
-    #     os.system(f"mkdir -p {filename}-vocab && wget -O {filename}-vocab/vocab.txt \
-    #         https://huggingface.co/nlpaueb/legal-bert-{category}-uncased/raw/main/vocab.txt")
-
     logging.info(f"Saving to {filename}.tar.gz")
     saveTarGZ(filename)
 
-    logging.info(f"Deleting {filename} directory")
-    os.system(f"rm -rf {filename}/")
+    logging.info("Placing files in proper directory")
+    os.system(f"find {filename} -type f ! -name 'vocab.txt' -delete && \
+        mv {filename}.tar.gz {filename}/")
 
 
 if __name__ == "__main__":
