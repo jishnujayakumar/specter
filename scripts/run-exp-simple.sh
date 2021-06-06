@@ -43,7 +43,7 @@ DEV_PATH="data/training-data/val.pkl"
 
 BERT_MODEL="bert-pretrained"
 BERT_VOCAB="pre-experiment/legal-bert-small-uncased/vocab.txt"
-BERT_WEIGHTS="pre-experiment/legal-bert-small-uncased/legal-bert-small-uncased.tar.gz"
+BERT_WEIGHTS="pre-experiment/legal-bert-small-uncased/legalbert.tar.gz"
 
 VOCAB_DIR="data/vocab/"
 INCLUDE_VENUE="false"
