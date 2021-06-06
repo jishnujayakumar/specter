@@ -11,8 +11,7 @@ def saveTarGZ(filename):
     """
     Save to tar.gz
     """
-    logging.info("Saving to legalbert.tar.gz")
-    tar = tarfile.open("legalbert.tar.gz", "w:gz")
+    tar = tarfile.open(f"{filename}.tar.gz", "w:gz")
     os.system(f"mv ./{filename}/config.json ./{filename}/bert_config.json")
     for name in ["bert_config.json", "pytorch_model.bin", "vocab.txt"]:
         tar.add(f"./{filename}/{name}")
@@ -43,11 +42,12 @@ def prepareLegalBertArtifacts(model):
     for artifact in [mdl, tokenizer]:
         saveToDisk(artifact, filename)
 
+    logging.info(f"Saving to {filename}.tar.gz")
     saveTarGZ(filename)
 
     logging.info("Placing files in proper directory")
     os.system(f"find {filename} -type f ! -name 'vocab.txt' -delete && \
-        mv legalbert.tar.gz {filename}/")
+        mv {filename}.tar.gz {filename}/")
 
 
 if __name__ == "__main__":
