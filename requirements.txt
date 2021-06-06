@@ -9,3 +9,4 @@ jsonlines
 pandas
 sklearn
 ijson
+Faker
