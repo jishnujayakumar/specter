@@ -33,7 +33,7 @@ batch_size=2
 bert_requires_grad='all'  #'pooler,11,10,9,8,7,6,5,4,3,2,1,0'
 default_lr=2e-5
 
-num_train_instances=680000
+num_train_instances=3000
 max_seq_len=256
 
 # ---------------

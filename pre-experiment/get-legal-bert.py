@@ -36,7 +36,7 @@ def prepareLegalBertArtifacts(model):
     logging.info(f"Retrieving {model}'s model")
     mdl = AutoModel.from_pretrained(model)
 
-    filename = f"{model.replace('/', '-')}"
+    filename = f"{model.split('/')[-1]}"
 
     logging.info("Saving tokenizer and model to disk")
     for artifact in [mdl, tokenizer]:
