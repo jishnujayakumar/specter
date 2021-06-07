@@ -33,7 +33,7 @@ def prepareLegalBertArtifacts(model):
 
     logging.info(f"Saving to {filename}.tar.gz")
     os.system(f"mv ./{filename}/config.json ./{filename}/bert_config.json && \
-        tar -czf {filename}.tar.gz {filename}")
+        tar czC {filename} . --transform='s,^\./,,' >| {filename}.tar.gz")
 
     logging.info("Placing files in proper directory")
     os.system(f"find {filename} -type f ! -name 'vocab.txt' -delete && \
@@ -44,3 +44,5 @@ if __name__ == "__main__":
     for model in ["nlpaueb/legal-bert-small-uncased",
                   "nlpaueb/legal-bert-base-uncased"]:
         prepareLegalBertArtifacts(model)
+
+        
