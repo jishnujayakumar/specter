@@ -146,7 +146,7 @@ else
 fi
 if [ -z "${recover+x}" ]
 then
-    python -m allennlp.run train $config_file  --include-package specter -s $serialization_dir
+    python3 -m allennlp.run train $config_file  --include-package specter -s $serialization_dir
 else
-    python -m allennlp.run train $config_file  --include-package specter -s $serialization_dir --recover
+    python3 -m allennlp.run train $config_file  --include-package specter -s $serialization_dir --recover
 fi

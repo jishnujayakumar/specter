@@ -20,10 +20,10 @@ def prepareLegalBertArtifacts(model):
     scibert.tar.gz (from: archive.tar.gz)
     """
     logging.info(f"Retrieving {model}'s tokenizer")
-    tokenizer = AutoTokenizer.from_pretrained(model)
+    tokenizer = AutoTokenizer.from_pretrained(model, force_download=True)
 
     logging.info(f"Retrieving {model}'s model")
-    mdl = AutoModel.from_pretrained(model)
+    mdl = AutoModel.from_pretrained(model, force_download=True)
 
     filename = f"{model.split('/')[-1]}"
 
