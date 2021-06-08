@@ -9,5 +9,4 @@ with open(f"{dir}/mapping.txt", "r") as mappingFile:
         mappingData = line.strip().split(" : ")
         frm = mappingData[0].replace("_", "\\_")
         to = mappingData[1].replace("_", "\\_")
-        print(f"sed -i 's/{frm}/{to}/g' {dir}/similarity-scores.txt")
         os.system(f"sed -i 's/{frm}/{to}/g' {dir}/similarity-scores.txt")

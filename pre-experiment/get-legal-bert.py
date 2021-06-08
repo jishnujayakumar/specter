@@ -44,5 +44,3 @@ if __name__ == "__main__":
     for model in ["nlpaueb/legal-bert-small-uncased",
                   "nlpaueb/legal-bert-base-uncased"]:
         prepareLegalBertArtifacts(model)
-
-        

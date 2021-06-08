@@ -1,4 +1,12 @@
 ## ADAPTATION TO LEGAL ANALYTICS
+
+### Preprocess and replace filenames from mapper.txt to similarity-scores.txt
+```bash
+chmod a+x pre-experiment/preprocess-legal-data.sh
+./pre-experiment/preprocess-legal-data.sh
+py pre-experiment/perform-mapping.py legal-data
+```
+
 ### To generate sample data
 ```bash
 cd pre-experiment/
