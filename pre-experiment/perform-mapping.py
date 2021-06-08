@@ -1,11 +1,13 @@
 import os
 import sys
+from tqdm import tqdm
 
 mappingData = None
 dir = sys.argv[1]
 
 with open(f"{dir}/mapping.txt", "r") as mappingFile:
-    for line in mappingFile.readlines():
+    lines = mappingFile.readlines()
+    for line in tqdm(lines):
         mappingData = line.strip().split(" : ")
         frm = mappingData[0].replace("_", "\\_")
         to = mappingData[1].replace("_", "\\_")
