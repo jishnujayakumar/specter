@@ -23,6 +23,7 @@ python3 generate-sample-data.py <total-number-of-samples>
 ```
 - Output directory: **pre-experiment/generated\_data**
 
+--------------------------------------------------------------------------
 
 ![plot](https://i.ibb.co/3TC1WmG/specter-logo-cropped.png)
 
