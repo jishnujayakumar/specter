@@ -1,12 +1,5 @@
 ## ADAPTATION TO LEGAL ANALYTICS
 
-### Preprocess and replace filenames from mapper.txt to similarity-scores.txt
-```bash
-chmod a+x pre-experiment/preprocess-legal-data.sh
-./pre-experiment/preprocess-legal-data.sh
-py pre-experiment/perform-mapping.py legal-data
-```
-
 ### To get legal-bert
 ```bash
 cd pre-experiment/
@@ -15,12 +8,21 @@ python3 get-legal-bert.py
 - Output will be saved in **pre-experiment/** directory
 
 
+### Preprocess and replace filenames from mapper.txt to similarity-scores.txt
+```bash
+chmod a+x pre-experiment/preprocess-legal-data.sh
+./pre-experiment/preprocess-legal-data.sh
+py pre-experiment/perform-mapping.py legal-data
+```
+
+
 ### To generate sample data
 ```bash
 cd pre-experiment/
 python3 generate-sample-data.py <total-number-of-samples>
 ```
 - Output directory: **pre-experiment/generated\_data**
+
 
 ![plot](https://i.ibb.co/3TC1WmG/specter-logo-cropped.png)
 
