@@ -7,18 +7,21 @@ chmod a+x pre-experiment/preprocess-legal-data.sh
 py pre-experiment/perform-mapping.py legal-data
 ```
 
-### To generate sample data
-```bash
-cd pre-experiment/
-python3 generate-sample-data.py <total-number-of-samples>
-```
-- Output directory: **pre-experiment/generated\_data**
 ### To get legal-bert
 ```bash
 cd pre-experiment/
 python3 get-legal-bert.py
 ```
 - Output will be saved in **pre-experiment/** directory
+
+
+### To generate sample data
+```bash
+cd pre-experiment/
+python3 generate-sample-data.py <total-number-of-samples>
+```
+- Output directory: **pre-experiment/generated\_data**
+
 ![plot](https://i.ibb.co/3TC1WmG/specter-logo-cropped.png)
 
 # SPECTER: Document-level Representation Learning using Citation-informed Transformers
