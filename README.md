@@ -12,7 +12,7 @@ python3 get-legal-bert.py
 ```bash
 chmod a+x pre-experiment/preprocess-legal-data.sh
 ./pre-experiment/preprocess-legal-data.sh
-py pre-experiment/perform-mapping.py legal-data
+python3 pre-experiment/perform-mapping.py legal-data
 ```
 
 
