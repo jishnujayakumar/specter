@@ -13,7 +13,7 @@ mappingData = None
 dir = sys.argv[1]
 
 # 1. Map similarity-scores.txt docIDs using mapper.txt 
-logging.info("1. Map similarity-scores.txt docIDs using mapper.txt")
+logging.info("Mapping similarity-scores.txt docIDs using mapper.txt")
 with open(f"{dir}/mapping.txt", "r") as mappingFile:
     lines = mappingFile.readlines()
     for line in tqdm(lines):
@@ -24,7 +24,7 @@ with open(f"{dir}/mapping.txt", "r") as mappingFile:
 
 
 # 2. Extract test docIDs from similarity-scores.txt
-logging.info("2. Extract test docIDs from similarity-scores.txt")
+logging.info("Extracting test docIDs from similarity-scores.txt")
 testDocIDs = set([])
 pklDir = f"{dir}/preProcessedData"
 os.system(f"mkdir -p {pklDir}")
@@ -38,7 +38,7 @@ with open(f"{dir}/similarity-scores.txt", "r") as mappingFile:
 
 
 # Create data.json [training set] excluding test DocIDs from 3
-logging.info("# Create data.json [training set] excluding test DocIDs from 3")
+logging.info("Creating data.json [training set] excluding test DocIDs from 3")
 data = {}
 """
 Since precedent-citation.txt only contains infdormation about positive citations
@@ -64,7 +64,7 @@ with open(f"{dir}/precedent-citation.txt", "r") as citationsInfoF:
 
 
 # Preprocess casetext
-logging.info("# Preprocess casetext")
+logging.info("Preprocessing casetext")
 casetextDir = f"{dir}/casetext"
 metadata = {}
 vocabTokens = defaultdict(int)
