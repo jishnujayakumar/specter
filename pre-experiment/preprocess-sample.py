@@ -27,7 +27,7 @@ for fromDocID in tqdm(sampletrainDocIds):
                 result[toDocID] = toDocsCitation[toDocID]
         if result:
             dataSamples[fromDocID] = result
-    count += 1
+            count += 1
 
     if count == nsamples:
         break
@@ -39,3 +39,18 @@ with open(f"{ppdDir}/data-{nsamples}-samples.json", "w") as outF:
     json.dump(dataSamples, outF, indent=2)
 
 save2Pickle(sampletrainDocIds, f"{ppdDir}/sampletrainDocID-Set.pkl")
+
+with open(f"{ppdDir}/metadata.json", "r") as dataF:
+    data = json.load(dataF)
+    sampleMetadata = {}
+    count = -1
+    for k, v in data.items():
+        if k in sampletrainDocIds:
+            sampleMetadata[k] = data[k]
+            count += 1
+
+        if count == nsamples:
+            break
+
+    with open(f"{ppdDir}/metadata-{nsamples}-samples.json", "w") as outF:
+        json.dump(sampleMetadata, outF, indent=2)

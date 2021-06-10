@@ -103,7 +103,7 @@ ELECTER_DIR = os.environ['ELECTER_DIR']
 
 vocabDir = f"{ELECTER_DIR}/pre-experiment/legal-data-vocab/"
 
-os.system("mkdir -p {vocabDir} && \
+os.system(f"mkdir -p {vocabDir} && \
     cp {ELECTER_DIR}/data/vocab/non_padded_namespaces.txt {vocabDir}")
 
 saveTokens(vocabTokens, f"{vocabDir}/tokens.txt")
