@@ -363,7 +363,7 @@ class TrainingInstanceGenerator:
 
 def get_instances(data, query_ids_file, metadata, data_source=None, n_jobs=1, n_jobs_raw=12,
                   ratio_hard_negatives=0.3, margin_fraction=0.5, samples_per_query=5,
-                  concat_title_abstract=False, included_text_fields='title abstract'):
+                  concat_title_abstract=False, included_text_fields='title'):
     """
     Gets allennlp instances from the data file
     Args:
