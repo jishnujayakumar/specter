@@ -91,8 +91,7 @@ for doc in tqdm(docs):
     metadata[docID] = {
         "paper_id": docID,
         "title": body,
-        "abstract": "",
-        "header": header
+        "abstract": header
     }
 
     if filesEncountered/nDocs < 0.8:
