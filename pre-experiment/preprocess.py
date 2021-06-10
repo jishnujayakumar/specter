@@ -94,8 +94,6 @@ for doc in tqdm(docs):
         "header": header
     }
 
-    ctgy = None
-
     if filesEncountered/nDocs < 0.8:
         trainDocs.append(docID)
     else:
@@ -109,8 +107,8 @@ for doc in tqdm(docs):
 trainDocs = "\n".join(trainDocs)
 valDocs = "\n".join(valDocs)
 
-os.system(f"echo '{trainDocs}' >> {pklDir}/train.txt")
-os.system(f"echo '{valDocs}' >> {pklDir}/val.txt")
+os.system(f"rm {pklDir}/train.txt && echo '{trainDocs}' >> {pklDir}/train.txt")
+os.system(f"{pklDir}/val.txt && echo '{valDocs}' >> {pklDir}/val.txt")
 
 vocabTokens = sortByValues(vocabTokens)
 headerTokens = sortByValues(headerTokens)
