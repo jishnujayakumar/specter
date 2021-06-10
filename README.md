@@ -1,5 +1,8 @@
 ## ADAPTATION TO LEGAL ANALYTICS
 
+## Requirements
+- Python >= 3.6
+
 ### To get legal-bert
 ```bash
 cd pre-experiment/
@@ -10,9 +13,27 @@ python3 get-legal-bert.py
 
 ### Preprocess and replace filenames from mapper.txt to similarity-scores.txt
 ```bash
+# Set git repo directory path as an environment variable 
+export ELECTER_DIR=`pwd`
+
 chmod a+x pre-experiment/preprocess-legal-data.sh
-./pre-experiment/preprocess-legal-data.sh
-python3 pre-experiment/perform-mapping.py legal-data
+
+# Place the following txt files in in specter/legal-data directory 
+# mapping.txt no_doc_mapping.txt  precedent-citation.txt  similarity-scores.txt
+# Output-Location: $ELECTER_DIR/legal-data/preProcessedData
+./pre-experiment/preprocess-legal-data.sh legal-data
+
+# Optional: To create a subset of nsamples
+# NOTE: To be run only after preceeding steps
+# Output-Location: $ELECTER_DIR/legal-data/preProcessedData/sampled
+python ./pre-experiment/preprocess-sample.py legal-data <nsamples>
+```
+
+### Preprocess casetext
+```bash
+# The documents must be stored in casetext directory
+# Place the casetext directory in legal-data directory
+./pre-experiment/preprocess-casetext.sh legal-data
 ```
 
 

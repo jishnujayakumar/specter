@@ -315,7 +315,7 @@ class Specter(pl.LightningModule):
         logger.info(f'loading model from checkpoint: {checkpoint_path}')
 
         self.hparams = init_args
-        self.pretrained_model = "nlpaueb/legal-bert-base-uncased"
+        self.pretrained_model = "nlpaueb/legal-bert-small-uncased"
         self.model = AutoModel.from_pretrained(self.pretrained_model)
         self.tokenizer = AutoTokenizer.from_pretrained(self.pretrained_model)
         self.tokenizer.model_max_length = self.model.config.max_position_embeddings
