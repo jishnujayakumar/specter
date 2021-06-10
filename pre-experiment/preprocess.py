@@ -90,8 +90,8 @@ for doc in tqdm(docs):
     body = casetext[splitIndex:].strip()
     metadata[docID] = {
         "paper_id": docID,
-        "title": body,
-        "abstract": header
+        "title": header,
+        "abstract": body
     }
 
     if filesEncountered/nDocs < 0.8:
