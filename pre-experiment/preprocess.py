@@ -36,6 +36,7 @@ with open(f"{dir}/similarity-scores.txt", "r") as mappingFile:
         testDocIDs.update(scoreData[:-1])
     save2Pickle(testDocIDs, f"{pklDir}/testDocsSet.pkl")
 
+    os.system(f"rm {pklDir}/test.txt")
     for testDocID in testDocIDs:
         os.system(f"echo '{testDocID}' >> {pklDir}/test.txt")
 
