@@ -73,9 +73,13 @@ metadata = {}
 vocabTokens = defaultdict(int)
 headerTokens = defaultdict(int)
 
-filesEncountered=0
+filesEncountered = 0
 docs = os.listdir(casetextDir)
 nDocs = len(docs)
+
+trainDocs = []
+valDocs = []
+
 for doc in tqdm(docs):
     filesEncountered += 1
     docID = doc.split(".")[0]
@@ -93,16 +97,20 @@ for doc in tqdm(docs):
     ctgy = None
 
     if filesEncountered/nDocs < 0.8:
-        ctgy = "train"
+        trainDocs.append(docID)
     else:
-        ctgy = "val"
-
-    os.system(f"echo '{docID}' >> {pklDir}/{ctgy}.txt")
+        valDocs.append(docID)
 
     for token in body.replace("\n", " ").split(" "):
         vocabTokens[token] += 1
     for headerToken in header.replace("\n", " ").split(" "):
         headerTokens[headerToken] += 1
+
+trainDocs = "\n".join(trainDocs)
+valDocs = "\n".join(valDocs)
+
+os.system(f"echo '{trainDocs}' >> {pklDir}/train.txt")
+os.system(f"echo '{valDocs}' >> {pklDir}/val.txt")
 
 vocabTokens = sortByValues(vocabTokens)
 headerTokens = sortByValues(headerTokens)
