@@ -69,15 +69,15 @@ for doc in tqdm(os.listdir(casetextDir)):
     casetext = getCaseTextContent(f"{casetextDir}/{doc}").lower()
     splitIndex = casetext.find("1. ") # Find the first occurence
     header = casetext[:splitIndex].strip()
-    title = casetext[splitIndex:].strip()
+    body = casetext[splitIndex:].strip()
     metadata[docID] = {
         "paper_id": docID,
-        "title": title,
+        "title": body,
         "abstract": "",
         "header": header
     }
 
-    for token in title.replace("\n", " ").split(" "):
+    for token in body.replace("\n", " ").split(" "):
         vocabTokens[token] += 1
     for headerToken in header.replace("\n", " ").split(" "):
         headerTokens[headerToken] += 1
@@ -91,8 +91,15 @@ save2Pickle(headerTokens, f"{pklDir}/headerTokens.pkl")
 vocabTokens = list(filter(None, vocabTokens.keys()))
 headerTokens = list(filter(None, headerTokens.keys()))
 
-saveTokens(vocabTokens, f"{pklDir}/tokens.txt")
-saveTokens(headerTokens, f"{pklDir}/header.txt")
+ELECTER_HOME = f"{os.environ('ELECTER_HOME')}"
+vocabDir = f"{ELECTER_HOME}/pre-experiment/legal-data-vocab/"
+
+os.system("mkdir -p {vocabDir} && \
+    cp {ELECTER_HOME}/data/vocab/non_padded_namespaces.txt {vocabDir}")
+
+saveTokens(vocabTokens, f"{vocabDir}/tokens.txt")
+saveTokens(headerTokens, f"{vocabDir}/header.txt")
+
 
 with open(f"{pklDir}/metadata.json", "w") as outF:
     json.dump(metadata, outF, indent=2)
