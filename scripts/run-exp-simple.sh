@@ -45,7 +45,7 @@ BERT_MODEL="bert-pretrained"
 BERT_VOCAB="pre-experiment/legal-bert-small-uncased/vocab.txt"
 BERT_WEIGHTS="pre-experiment/legal-bert-small-uncased/legal-bert-small-uncased.tar.gz"
 
-VOCAB_DIR="data/vocab/"
+VOCAB_DIR="pre-experiment/legal-data-vocab/"
 INCLUDE_VENUE="false"
 
 # --------------
