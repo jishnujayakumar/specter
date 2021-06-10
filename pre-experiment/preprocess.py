@@ -36,6 +36,9 @@ with open(f"{dir}/similarity-scores.txt", "r") as mappingFile:
         testDocIDs.update(scoreData[:-1])
     save2Pickle(testDocIDs, f"{pklDir}/testDocsSet.pkl")
 
+    for testDocID in testDocIDs:
+        os.system(f"echo '{testDocID}' >> {pklDir}/test.txt")
+
 
 # Create data.json [training set] excluding test DocIDs from 3
 logging.info("Creating data.json [training set] excluding test DocIDs from 3")
@@ -70,7 +73,11 @@ metadata = {}
 vocabTokens = defaultdict(int)
 headerTokens = defaultdict(int)
 
-for doc in tqdm(os.listdir(casetextDir)):
+filesEncountered=0
+docs = os.listdir(casetextDir)
+nDocs = len(docs)
+for doc in tqdm(docs):
+    filesEncountered += 1
     docID = doc.split(".")[0]
     casetext = getCaseTextContent(f"{casetextDir}/{doc}").lower()
     splitIndex = casetext.find("1. ") # Find the first occurence
@@ -82,6 +89,15 @@ for doc in tqdm(os.listdir(casetextDir)):
         "abstract": "",
         "header": header
     }
+
+    ctgy = None
+
+    if filesEncountered/nDocs < 0.8:
+        ctgy = "train"
+    else:
+        ctgy = "val"
+
+    os.system(f"echo '{docID}' >> {pklDir}/{ctgy}.txt")
 
     for token in body.replace("\n", " ").split(" "):
         vocabTokens[token] += 1
