@@ -99,11 +99,12 @@ save2Pickle(headerTokens, f"{pklDir}/headerTokens.pkl")
 vocabTokens = list(filter(None, vocabTokens.keys()))
 headerTokens = list(filter(None, headerTokens.keys()))
 
-ELECTER_HOME = f"{os.environ('ELECTER_HOME')}"
-vocabDir = f"{ELECTER_HOME}/pre-experiment/legal-data-vocab/"
+ELECTER_DIR = os.environ['ELECTER_DIR']
+
+vocabDir = f"{ELECTER_DIR}/pre-experiment/legal-data-vocab/"
 
 os.system("mkdir -p {vocabDir} && \
-    cp {ELECTER_HOME}/data/vocab/non_padded_namespaces.txt {vocabDir}")
+    cp {ELECTER_DIR}/data/vocab/non_padded_namespaces.txt {vocabDir}")
 
 saveTokens(vocabTokens, f"{vocabDir}/tokens.txt")
 saveTokens(headerTokens, f"{vocabDir}/header.txt")
