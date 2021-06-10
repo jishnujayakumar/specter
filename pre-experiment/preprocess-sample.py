@@ -32,17 +32,9 @@ for fromDocID in tqdm(sampletrainDocIds):
     if count == nsamples:
         break
 
-ppdDir = f"{ppdDir}/sampled"
-os.system(f"mkdir -p {ppdDir}")
-
-with open(f"{ppdDir}/data-{nsamples}-samples.json", "w") as outF:
-    json.dump(dataSamples, outF, indent=2)
-
-save2Pickle(sampletrainDocIds, f"{ppdDir}/sampletrainDocID-Set.pkl")
-
+sampleMetadata = {}
 with open(f"{ppdDir}/metadata.json", "r") as dataF:
     data = json.load(dataF)
-    sampleMetadata = {}
     count = -1
     for k, v in data.items():
         if k in sampletrainDocIds:
@@ -52,5 +44,13 @@ with open(f"{ppdDir}/metadata.json", "r") as dataF:
         if count == nsamples:
             break
 
-    with open(f"{ppdDir}/metadata-{nsamples}-samples.json", "w") as outF:
-        json.dump(sampleMetadata, outF, indent=2)
+ppdDir = f"{ppdDir}/sampled"
+os.system(f"mkdir -p {ppdDir}")
+
+with open(f"{ppdDir}/data-{nsamples}-samples.json", "w") as outF:
+    json.dump(dataSamples, outF, indent=2)
+
+with open(f"{ppdDir}/metadata-{nsamples}-samples.json", "w") as outF:
+    json.dump(sampleMetadata, outF, indent=2)
+
+save2Pickle(sampletrainDocIds, f"{ppdDir}/sampletrainDocID-Set.pkl")
