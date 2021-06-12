@@ -43,7 +43,7 @@ for rowID in range(ndocs):
     for colID in range(ndocs):
         p = random.uniform(0, 1)
         if p < 0.25:
-            docCount[colID] = {"count": 1}
+            docCount[colID] = {"count": 5}
         elif p >= 0.25 and p < 0.6:
             docCount[colID] = {"count": 5}
     data[rowID] = docCount
