@@ -68,7 +68,7 @@ with open(f"{dir}/precedent-citation.txt", "r") as citationsInfoF:
 
 negSample = {"count": 1}
 data2 = {}
-for P1 in data.keys():
+for P1 in tqdm(data.keys()):
     P2s = data[P1].keys()
     for P2 in P2s:
         P3s = data[P2].keys()
