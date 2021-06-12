@@ -95,7 +95,7 @@ for doc in tqdm(docs):
 
     # Method-2 Seperation using "The Judgment was delivered by:"
     s=f"grep -n 'The Judgment was delivered by:' {filePath}"
-    splitLineNum = os.popen(s).read().split(":")[0]
+    splitLineNum = int(os.popen(s).read().split(":")[0])
     header, body = splitbyLineNumber(filePath, splitLineNum)
     metadata[docID] = {
         "paper_id": docID,
