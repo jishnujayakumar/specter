@@ -30,3 +30,8 @@ def saveTokens(tokens, file):
     for token in tqdm(tokens):
         with open(file, "a") as F:
             F.write(f"{token}\n")
+
+
+def saveDocIDsToTXT(docIDString, filepath):
+    with open(filepath, "w") as txtF:
+        txtF.write(docIDString)

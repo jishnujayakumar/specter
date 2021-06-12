@@ -106,11 +106,8 @@ for doc in tqdm(docs):
     for headerToken in header.replace("\n", " ").split(" "):
         headerTokens[headerToken] += 1
 
-trainDocs = "\n".join(trainDocs)
-valDocs = "\n".join(valDocs)
-
-os.system(f"rm {pklDir}/train.txt && echo \"{trainDocs}\" >> {pklDir}/train.txt")
-os.system(f"rm {pklDir}/val.txt && echo \"{valDocs}\" >> {pklDir}/val.txt")
+saveDocIDsToTXT("\n".join(trainDocs), f"{pklDir}/train.txt")
+saveDocIDsToTXT("\n".join(valDocs), f"{pklDir}/val.txt")
 
 vocabTokens = sortByValues(vocabTokens)
 headerTokens = sortByValues(headerTokens)
