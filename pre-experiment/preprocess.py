@@ -107,8 +107,8 @@ for doc in tqdm(docs):
 trainDocs = "\n".join(trainDocs)
 valDocs = "\n".join(valDocs)
 
-os.system(f"rm {pklDir}/train.txt && echo '{trainDocs}' >> {pklDir}/train.txt")
-os.system(f"rm {pklDir}/val.txt && echo '{valDocs}' >> {pklDir}/val.txt")
+os.system(f"rm {pklDir}/train.txt && echo \"{trainDocs}\" >> {pklDir}/train.txt")
+os.system(f"rm {pklDir}/val.txt && echo \"{valDocs}\" >> {pklDir}/val.txt")
 
 vocabTokens = sortByValues(vocabTokens)
 headerTokens = sortByValues(headerTokens)
