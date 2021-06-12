@@ -37,8 +37,7 @@ with open(f"{dir}/similarity-scores.txt", "r") as mappingFile:
     save2Pickle(testDocIDs, f"{pklDir}/testDocsSet.pkl")
 
     os.system(f"rm {pklDir}/test.txt")
-    for testDocID in testDocIDs:
-        os.system(f"echo '{testDocID}' >> {pklDir}/test.txt")
+    saveDocIDsToTXT("\n".join(testDocIDs), f"{pklDir}/test.txt")
 
 
 # Create data.json [training set] excluding test DocIDs from 3
