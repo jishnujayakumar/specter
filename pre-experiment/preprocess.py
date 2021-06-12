@@ -68,14 +68,17 @@ with open(f"{dir}/precedent-citation.txt", "r") as citationsInfoF:
 
 negSample = {"count": 1}
 data2 = {}
-for P1 in tqdm(data.keys()):
-    P2s = data[P1].keys()
-    for P2 in P2s:
-        P3s = data[P2].keys()
-        for P3 in P3s:
-            if P3 not in P2s:  # condition for hard sample
-                data2[P1] = data[P1]
-                data2[P3] = negSample
+dkeys = data.keys()
+for P1 in tqdm(dkeys):
+    if P1 in dkeys:
+        P2s = data[P1].keys()
+        for P2 in P2s:
+            if P2 in dkeys:
+                P3s = data[P2].keys()
+                for P3 in P3s:
+                    if P3 not in P2s:  # condition for hard sample
+                        data2[P1] = data[P1]
+                        data2[P3] = negSample
 
 with open(f"{pklDir}/data.json", "w") as outF:
     json.dump(data2, outF, indent=2)
