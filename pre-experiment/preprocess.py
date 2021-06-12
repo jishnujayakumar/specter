@@ -83,10 +83,20 @@ valDocs = []
 for doc in tqdm(docs):
     filesEncountered += 1
     docID = doc.split(".")[0]
-    casetext = getCaseTextContent(f"{casetextDir}/{doc}").lower()
-    splitIndex = casetext.find("1. ")  # Find the first occurence
-    header = casetext[:splitIndex].strip()
-    body = casetext[splitIndex:].strip()
+    filePath = f"{casetextDir}/{doc}"
+    casetext = getCaseTextContent(filePath).lower()
+
+    # Following uses the "1. " as the seperator for header and body 
+    # Doesn't work properly, hence going with method-2
+    # # Find the first occurence
+    # splitIndex = casetext.find("1. ")  
+    # header = casetext[:splitIndex].strip()
+    # body = casetext[splitIndex:].strip()
+
+    # Method-2 Seperation using "The Judgment was delivered by:"
+    s=f"grep -n 'The Judgment was delivered by:' {filePath}"
+    splitLineNum = os.popen(s).read().split(":")[0]
+    header, body = splitbyLineNumber(filePath, splitLineNum)
     metadata[docID] = {
         "paper_id": docID,
         "title": header,

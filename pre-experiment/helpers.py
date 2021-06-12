@@ -36,3 +36,10 @@ def saveDocIDsToTXT(docIDString, filepath):
     os.system(f"touch {filepath}")
     with open(filepath, "w") as txtF:
         txtF.write(docIDString)
+
+
+def splitbyLineNumber(filepath, splitLineNum):
+    splitLineNum += 1
+    with open(filepath) as f:
+        lines = f.readlines()
+        return "\n".join(lines[:splitLineNum]), "\n".join(lines[splitLineNum:])
