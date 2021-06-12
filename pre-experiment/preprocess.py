@@ -85,7 +85,7 @@ for doc in tqdm(docs):
     filesEncountered += 1
     docID = doc.split(".")[0]
     casetext = getCaseTextContent(f"{casetextDir}/{doc}").lower()
-    splitIndex = casetext.find("1. ") # Find the first occurence
+    splitIndex = casetext.find("1. ")  # Find the first occurence
     header = casetext[:splitIndex].strip()
     body = casetext[splitIndex:].strip()
     metadata[docID] = {
@@ -95,9 +95,11 @@ for doc in tqdm(docs):
     }
 
     if filesEncountered/nDocs < 0.8:
+        print(filesEncountered, "train", len(trainDocs))
         trainDocs.append(docID)
     else:
         valDocs.append(docID)
+        print(filesEncountered, "val", len(valDocs))
 
     for token in body.replace("\n", " ").split(" "):
         vocabTokens[token] += 1
