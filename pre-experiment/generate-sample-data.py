@@ -18,7 +18,7 @@ metadata = {}
 for docID in range(ndocs):
     metadata[docID] = {
       "paper_id": str(docID),
-      "abstract": fake.text(),
+    #   "abstract": fake.text(),
       "title": fake.sentence()
     }
 
