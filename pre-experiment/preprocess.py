@@ -93,8 +93,8 @@ for doc in tqdm(docs):
     # header = casetext[:splitIndex].strip()
     # body = casetext[splitIndex:].strip()
 
-    # Method-2 Seperation using "The Judgment was delivered by:"
-    s=f"grep -n 'The Judgment was delivered by:' {filePath}"
+    # Method-2 Seperation using "The Judgment was delivered"
+    s=f"grep -n 'The Judgment was delivered' {filePath}"
     splitLineNum = int(os.popen(s).read().split(":")[0])
     header, body = splitbyLineNumber(filePath, splitLineNum)
     metadata[docID] = {
