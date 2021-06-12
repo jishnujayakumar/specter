@@ -95,11 +95,9 @@ for doc in tqdm(docs):
     }
 
     if filesEncountered/nDocs < 0.8:
-        print(filesEncountered, "train", len(trainDocs))
         trainDocs.append(docID)
     else:
         valDocs.append(docID)
-        print(filesEncountered, "val", len(valDocs))
 
     for token in body.replace("\n", " ").split(" "):
         vocabTokens[token] += 1
