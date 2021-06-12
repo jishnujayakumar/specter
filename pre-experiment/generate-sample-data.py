@@ -15,7 +15,7 @@ os.system("mkdir -p generated_data")
 # Create metadata.json
 metadata = {}
 
-for docID in tqdm(ndocs):
+for docID in tqdm(range(ndocs)):
     metadata[docID] = {
       "paper_id": str(docID),
     #   "abstract": fake.text(),
@@ -38,7 +38,7 @@ with open("generated_data/metadata.json", "w") as out_file:
 
 # Create data.json
 data = {}
-for rowID in tqdm(ndocs):
+for rowID in tqdm(range(ndocs)):
     docCount = {}
     for colID in range(ndocs):
         p = random.uniform(0, 1)
