@@ -49,6 +49,7 @@ Here only positive samples are considered
 TODO: Discuss with team regarding the formulation of hard-negative signals
 """
 posSample = {"count": 5}
+
 with open(f"{dir}/precedent-citation.txt", "r") as citationsInfoF:
     citations = citationsInfoF.readlines()
     for citation in tqdm(citations):
@@ -62,9 +63,22 @@ with open(f"{dir}/precedent-citation.txt", "r") as citationsInfoF:
                 data[frm] = docCiteData
             else:
                 data[frm] = {to: posSample}
-    with open(f"{pklDir}/data.json", "w") as outF:
+    with open(f"{pklDir}/postive_data.json", "w") as outF:
         json.dump(data, outF, indent=2)
 
+negSample = {"count": 1}
+data2 = {}
+for P1 in data.keys():
+    P2s = data[P1].keys()
+    for P2 in P2s:
+        P3s = data[P2].keys()
+        for P3 in P3s:
+            if P3 not in P2s:  # condition for hard sample
+                d = data[P1]
+                d[P3] = negSample
+                data2[P1] = d
+with open(f"{pklDir}/data.json", "w") as outF:
+    json.dump(data2, outF, indent=2)
 
 # Preprocess casetext
 logging.info("Preprocessing casetext")
