@@ -99,9 +99,10 @@ for doc in tqdm(docs):
     # splitLineNum = int(os.popen(s).read().split(":")[0])
     # print(splitLineNum)
     # header, body = splitbyLineNumber(filePath, splitLineNum)
+    body = casetext
     metadata[docID] = {
         "paper_id": docID,
-        "title": casetext,
+        "title": body,
         "abstract": {}
     }
 
@@ -112,8 +113,8 @@ for doc in tqdm(docs):
 
     for token in body.replace("\n", " ").split(" "):
         vocabTokens[token] += 1
-    for headerToken in header.replace("\n", " ").split(" "):
-        headerTokens[headerToken] += 1
+    # for headerToken in header.replace("\n", " ").split(" "):
+    #     headerTokens[headerToken] += 1
 
 saveDocIDsToTXT("\n".join(trainDocs), f"{pklDir}/train.txt")
 saveDocIDsToTXT("\n".join(valDocs), f"{pklDir}/val.txt")
