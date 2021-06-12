@@ -33,5 +33,6 @@ def saveTokens(tokens, file):
 
 
 def saveDocIDsToTXT(docIDString, filepath):
+    os.system(f"touch {filepath}")
     with open(filepath, "w") as txtF:
         txtF.write(docIDString)
