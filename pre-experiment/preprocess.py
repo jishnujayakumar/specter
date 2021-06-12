@@ -95,14 +95,14 @@ for doc in tqdm(docs):
 
     # Method-2 Seperation using "The Judgment was delivered"
     s=f"grep -n 'The Judgment was delivered' {filePath}"
-    print(doc,os.popen(s).read().split(":"))
-    splitLineNum = int(os.popen(s).read().split(":")[0])
-    print(splitLineNum)
-    header, body = splitbyLineNumber(filePath, splitLineNum)
+    # print(doc,os.popen(s).read().split(":"))
+    # splitLineNum = int(os.popen(s).read().split(":")[0])
+    # print(splitLineNum)
+    # header, body = splitbyLineNumber(filePath, splitLineNum)
     metadata[docID] = {
         "paper_id": docID,
-        "title": header,
-        "abstract": body
+        "title": casetext,
+        "abstract": {}
     }
 
     if filesEncountered/nDocs < 0.8:
