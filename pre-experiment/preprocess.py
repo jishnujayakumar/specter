@@ -74,9 +74,9 @@ for P1 in data.keys():
         P3s = data[P2].keys()
         for P3 in P3s:
             if P3 not in P2s:  # condition for hard sample
-                d = data[P1]
-                d[P3] = negSample
-                data2[P1] = d
+                data2[P1] = data[P1]
+                data2[P3] = negSample
+
 with open(f"{pklDir}/data.json", "w") as outF:
     json.dump(data2, outF, indent=2)
 
