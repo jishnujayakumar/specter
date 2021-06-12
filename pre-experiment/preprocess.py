@@ -78,7 +78,7 @@ for P1 in tqdm(dkeys):
                 for P3 in P3s:
                     if P3 not in P2s:  # condition for hard sample
                         data2[P1] = data[P1]
-                        data2[P1][P3] = negSample
+                        data2[P3] = {P1: negSample}
 
 with open(f"{pklDir}/data.json", "w") as outF:
     json.dump(data2, outF, indent=2)
