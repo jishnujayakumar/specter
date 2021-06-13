@@ -42,10 +42,11 @@ TRAIN_PATH="data/training-data/train.pkl"
 DEV_PATH="data/training-data/val.pkl"
 
 BERT_MODEL="bert-pretrained"
-BERT_VOCAB="pre-experiment/legal-bert-small-uncased/vocab.txt"
-BERT_WEIGHTS="pre-experiment/legal-bert-small-uncased/legal-bert-small-uncased.tar.gz"
+BERT_VARIANT="legal-bert-base-uncased" # for legal-bert
+BERT_VOCAB="pre-experiment/$BERT_VARIANT/vocab.txt"
+BERT_WEIGHTS="pre-experiment/$BERT_VARIANT/$BERT_VARIANT.tar.gz"
 
-VOCAB_DIR="pre-experiment/legal-data-vocab/"
+VOCAB_DIR="legal-data-sample/legal-data-vocab/"
 INCLUDE_VENUE="false"
 
 # --------------
