@@ -1,4 +1,4 @@
-directory=$1
+directory=$ELECTER_DIR/$1
 trainP=$2
 
 echo "Replacement..."
@@ -16,5 +16,5 @@ sed -i 's/no_doc_7/2013_K_16/g' $directory/precedent-citation.txt
 echo "Replacement Done."
 
 echo "Preprocessing..."
-python3 ./pre-experiment/preprocess.py $directory $trainP
+python3 ./pre-experiment/preprocess.py $1 $trainP
 echo "Preprocessing Done."
