@@ -21,8 +21,8 @@ chmod a+x pre-experiment/preprocess-legal-data.sh
 # Place the following txt files in in specter/legal-data directory 
 # mapping.txt no_doc_mapping.txt  precedent-citation.txt  similarity-scores.txt
 # Output-Location: $ELECTER_DIR/legal-data/preProcessedData
-# 0.6 is train set percentage, 2500 docs are sampled from raw dataset
-./pre-experiment/preprocess-legal-data.sh legal-data 0.6 2500
+# 0.6 is train set percentage, 0.1 docs would be sampled from the total dataset
+./pre-experiment/preprocess-legal-data.sh legal-data 0.6 0.1
 
 # Optional: To create a subset of nsamples
 # NOTE: To be run only after preceeding steps

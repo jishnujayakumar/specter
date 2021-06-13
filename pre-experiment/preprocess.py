@@ -63,7 +63,7 @@ os.system(f"mv {goldDocFiles} {goldScoreDir}/")
 
 # Create citation-adj-list.json [training set] excluding test DocIDs from 3
 logging.info("Creating citation-adj-list.json [training set] excluding \
-    test DocIDs from 3")
+test DocIDs from 3")
 citationAdjList = defaultdict(list)
 """
 Since precedent-citation.txt only contains infdormation about positive
