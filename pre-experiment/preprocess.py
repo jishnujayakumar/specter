@@ -1,7 +1,6 @@
+import argparse
 import os
-import sys
 from tqdm import tqdm
-import pickle as pkl
 import json
 from helpers import *
 from collections import defaultdict
@@ -9,13 +8,27 @@ import logging
 
 logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.INFO)
 
+parser = argparse.ArgumentParser(description='Preprocess legal-dataset \
+    [Courtesy: IIT-KGP]')
+args = parser.parse_args()
+
+parser.add_argument('--dir', type=str, default="legal-data",
+                    help='legal dataset directory relative path \
+                        w.r.t. ELECTER_DIR')
+parser.add_argument('--trainDataPercent', type=float, default=0.8,
+                    help='Percentage (scale is 1 in lieu of 100) \
+                        of total data to be used as train set')
+parser.add_argument('--samplePercent', type=float, default=1,
+                    help='Percentage (scale is 1 in lieu pf 100) \
+                        of total data to be as dataset')
+
 mappingData = None
-dir = sys.argv[1]
-trainP = float(sys.argv[2])
+dir = args.dir
+trainP = args.trainDataPercent
 valP = testP = (1-trainP)/2
 ELECTER_DIR = os.environ['ELECTER_DIR']
 
-# 1. Map similarity-scores.txt docIDs using mapper.txt 
+# 1. Map similarity-scores.txt docIDs using mapper.txt
 logging.info("Mapping similarity-scores.txt docIDs using mapper.txt")
 with open(f"{ELECTER_DIR}/{dir}/mapping.txt", "r") as mappingFile:
     lines = mappingFile.readlines()
@@ -23,7 +36,8 @@ with open(f"{ELECTER_DIR}/{dir}/mapping.txt", "r") as mappingFile:
         mappingData = line.strip().split(" : ")
         frm = mappingData[0].replace("_", "\\_")
         to = mappingData[1].replace("_", "\\_")
-        os.system(f"sed -i 's/{frm}/{to}/g' {ELECTER_DIR}/{dir}/similarity-scores.txt")
+        os.system(f"sed -i 's/{frm}/{to}/g' \
+        {ELECTER_DIR}/{dir}/similarity-scores.txt")
 
 
 # 2. Extract test docIDs from similarity-scores.txt
@@ -34,7 +48,6 @@ goldScoreDir = f"{ELECTER_DIR}/{dir}/Gold-Score-Docs"
 caseTextDir = f"{ELECTER_DIR}/{dir}/casetext"
 
 os.system(f"mkdir -p {pklDir} {goldScoreDir}")
-
 with open(f"{ELECTER_DIR}/{dir}/similarity-scores.txt", "r") as mappingFile:
     lines = mappingFile.readlines()
     for line in tqdm(lines):
@@ -43,25 +56,35 @@ with open(f"{ELECTER_DIR}/{dir}/similarity-scores.txt", "r") as mappingFile:
         goldScoreDocIDs.update(scoreData[:-1])
     save2Pickle(goldScoreDocIDs, f"{pklDir}/goldScoreDocIDs-Set.pkl")
 
-goldDocFiles = " ".join([f"{caseTextDir}/{goldScoreDocID}.txt" for goldScoreDocID in goldScoreDocIDs])
+goldDocFiles = " ".join([
+    f"{caseTextDir}/{goldScoreDocID}.txt"
+    for goldScoreDocID in goldScoreDocIDs])
 os.system(f"mv {goldDocFiles} {goldScoreDir}/")
 
 # Create citation-adj-list.json [training set] excluding test DocIDs from 3
-logging.info("Creating citation-adj-list.json [training set] excluding test DocIDs from 3")
+logging.info("Creating citation-adj-list.json [training set] excluding \
+    test DocIDs from 3")
 citationAdjList = defaultdict(list)
 """
-Since precedent-citation.txt only contains infdormation about positive citations
-Here only positive samples are considered
+Since precedent-citation.txt only contains infdormation about positive
+citations. Here only positive samples are considered
 TODO: Discuss with team regarding the formulation of hard-negative signals
 """
 
-with open(f"{ELECTER_DIR}/{dir}/precedent-citation.txt", "r") as citationsInfoF:
+casetextDir = f"{ELECTER_DIR}/{dir}/casetext"
+docs = os.listdir(casetextDir)
+nDocs = int(len(docs)*args.samplePercent)
+docs = [doc.split(".")[0] for doc in docs[:nDocs]]
+
+with open(f"{ELECTER_DIR}/{dir}/precedent-citation.txt", "r") \
+        as citationsInfoF:
     citations = citationsInfoF.readlines()
     for citation in tqdm(citations):
         docsIDs = citation.strip().split(" : ")
         frm, to = docsIDs[0], docsIDs[1]
         # Exclude test samples from data.json [training set]
-        if frm not in goldScoreDocIDs and to not in goldScoreDocIDs:
+        if frm not in goldScoreDocIDs and to not in goldScoreDocIDs and \
+                frm in docs and to in docs:
             citationAdjList[frm].append(to)
     with open(f"{pklDir}/citation-adj-list.json", "w") as outF:
         json.dump(citationAdjList, outF, indent=2)
@@ -88,23 +111,19 @@ with open(f"{pklDir}/data.json", "w") as outF:
 
 # Preprocess casetext
 logging.info("Preprocessing casetext")
-casetextDir = f"{ELECTER_DIR}/{dir}/casetext"
 metadata = {}
 vocabTokens = defaultdict(int)
 headerTokens = defaultdict(int)
 
 filesEncountered = 0
-docs = os.listdir(casetextDir)
-nDocs = len(docs)
 
 trainDocs = []
 valDocs = []
 testDocs = []
 
-for doc in tqdm(docs):
+for docID in tqdm(docs):
     filesEncountered += 1
-    docID = doc.split(".")[0]
-    filePath = f"{casetextDir}/{doc}"
+    filePath = f"{casetextDir}/{docID}.txt"
     casetext = getCaseTextContent(filePath).lower()
 
     # Following uses the "1. " as the seperator for header and body 

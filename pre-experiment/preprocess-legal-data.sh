@@ -1,5 +1,4 @@
 directory=$ELECTER_DIR/$1
-trainP=$2
 
 echo "Replacement..."
 sed -i 's/\ \ =\ \ / : /g' $directory/mapping.txt 
@@ -16,5 +15,10 @@ sed -i 's/no_doc_7/2013_K_16/g' $directory/precedent-citation.txt
 echo "Replacement Done."
 
 echo "Preprocessing..."
-python3 ./pre-experiment/preprocess.py $1 $trainP
+if [ "$3" ]; then
+  python3 ./pre-experiment/preprocess.py --dir $1 --trainDataPercent $2 --samplePercent $3
+else
+  python3 ./pre-experiment/preprocess.py --dir $1 --trainDataPercent $2 --samplePercent 1
+fi
+
 echo "Preprocessing Done."
