@@ -42,13 +42,12 @@ with open(f"{dir}/similarity-scores.txt", "r") as mappingFile:
 
 # Create data.json [training set] excluding test DocIDs from 3
 logging.info("Creating data.json [training set] excluding test DocIDs from 3")
-data = {}
+citationAdjList = defaultdict(list)
 """
 Since precedent-citation.txt only contains infdormation about positive citations
 Here only positive samples are considered
 TODO: Discuss with team regarding the formulation of hard-negative signals
 """
-posSample = {"count": 5}
 
 with open(f"{dir}/precedent-citation.txt", "r") as citationsInfoF:
     citations = citationsInfoF.readlines()
@@ -56,46 +55,38 @@ with open(f"{dir}/precedent-citation.txt", "r") as citationsInfoF:
         docsIDs = citation.strip().split(" : ")
         frm, to = docsIDs[0], docsIDs[1]
         # Exclude test samples from data.json [training set]
-        # if frm not in testDocIDs and to not in testDocIDs:
-        if frm in data:
-            docCiteData = data[frm]
-            docCiteData[to] = posSample
-            data[frm] = docCiteData
-        else:
-            data[frm] = {to: posSample}
-    with open(f"{pklDir}/postive_data.json", "w") as outF:
-        json.dump(data, outF, indent=2)
+        '''
+        if frm not in testDocIDs and to not in testDocIDs:
+            if frm in data:
+                docCiteData = data[frm]
+                docCiteData[to] = posSample
+                data[frm] = docCiteData
+            else:
+                data[frm] = {to: posSample}
+        '''
+        citationAdjList[frm].append(to)
+    with open(f"{pklDir}/citation-adj-list.json", "w") as outF:
+        json.dump(citationAdjList, outF, indent=2)
 
-negSample = {"count": 1}
-data2 = {}
-dkeys = data.keys()
-for P1 in tqdm(dkeys):
-    if P1 in dkeys:
-        _ = data[P1]
-        P2s = data[P1].keys()
-        for P2 in P2s:
-            if P2 in dkeys:
-                P3s = data[P2].keys()
-                for P3 in P3s:
-                    if P3 not in P2s:  # condition for hard sample
+posSample = {"count": 5}
+hardNegSample = {"count": 1}
 
-
-
-
-
-                    data2 = _
-
-
-
-
-
-
-
-
-
+data = {}
+P1s = citationAdjList.keys()
+for P1 in tqdm(P1s):
+    P2s = citationAdjList[P1]
+    result = {}
+    for P2 in P2s:
+        result[P2] = posSample
+        if P2 in P1s:
+            P3s = data[P2]
+            for P3 in P3s:
+                if P3 not in P2s:  # condition for hard sample
+                    result[P3] = hardNegSample
+    data[P1] = result
 
 with open(f"{pklDir}/data.json", "w") as outF:
-    json.dump(data2, outF, indent=2)
+    json.dump(data, outF, indent=2)
 
 # Preprocess casetext
 logging.info("Preprocessing casetext")
