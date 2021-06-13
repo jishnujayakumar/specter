@@ -40,8 +40,8 @@ with open(f"{dir}/similarity-scores.txt", "r") as mappingFile:
     saveDocIDsToTXT("\n".join(testDocIDs), f"{pklDir}/test.txt")
 
 
-# Create data.json [training set] excluding test DocIDs from 3
-logging.info("Creating data.json [training set] excluding test DocIDs from 3")
+# Create citation-adj-list.json [training set] excluding test DocIDs from 3
+logging.info("Creating citation-adj-list.json [training set] excluding test DocIDs from 3")
 citationAdjList = defaultdict(list)
 """
 Since precedent-citation.txt only contains infdormation about positive citations
