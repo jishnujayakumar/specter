@@ -1,5 +1,5 @@
 directory=$ELECTER_DIR/$1
-trainP = $2
+trainP=$2
 
 echo "Replacement..."
 sed -i 's/\ \ =\ \ / : /g' $directory/mapping.txt 
