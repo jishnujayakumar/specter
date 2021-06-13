@@ -10,7 +10,6 @@ logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.INFO)
 
 parser = argparse.ArgumentParser(description='Preprocess legal-dataset \
     [Courtesy: IIT-KGP]')
-args = parser.parse_args()
 
 parser.add_argument('--dir', type=str, default="legal-data",
                     help='legal dataset directory relative path \
@@ -21,6 +20,7 @@ parser.add_argument('--trainDataPercent', type=float, default=0.8,
 parser.add_argument('--samplePercent', type=float, default=1,
                     help='Percentage (scale is 1 in lieu pf 100) \
                         of total data to be as dataset')
+args = parser.parse_args()
 
 mappingData = None
 dir = args.dir
