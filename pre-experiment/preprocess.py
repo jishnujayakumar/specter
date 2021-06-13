@@ -9,6 +9,8 @@ import logging
 
 logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.INFO)
 
+print(sys.argv)
+
 mappingData = None
 dir = sys.argv[1]
 trainP = float(sys.argv[2])
