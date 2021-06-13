@@ -11,34 +11,40 @@ logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.INFO)
 
 mappingData = None
 dir = sys.argv[1]
+trainP = int(sys.argv[2])
+valP = testP = (1-trainP)/2
+ELECTER_DIR = os.environ['ELECTER_DIR']
 
 # 1. Map similarity-scores.txt docIDs using mapper.txt 
 logging.info("Mapping similarity-scores.txt docIDs using mapper.txt")
-with open(f"{dir}/mapping.txt", "r") as mappingFile:
+with open(f"{ELECTER_DIR}/{dir}/mapping.txt", "r") as mappingFile:
     lines = mappingFile.readlines()
     for line in tqdm(lines):
         mappingData = line.strip().split(" : ")
         frm = mappingData[0].replace("_", "\\_")
         to = mappingData[1].replace("_", "\\_")
-        os.system(f"sed -i 's/{frm}/{to}/g' {dir}/similarity-scores.txt")
+        os.system(f"sed -i 's/{frm}/{to}/g' {ELECTER_DIR}/{dir}/similarity-scores.txt")
 
 
 # 2. Extract test docIDs from similarity-scores.txt
 logging.info("Extracting test docIDs from similarity-scores.txt")
-testDocIDs = set([])
-pklDir = f"{dir}/preProcessedData"
-os.system(f"mkdir -p {pklDir}")
-with open(f"{dir}/similarity-scores.txt", "r") as mappingFile:
+goldScoreDocIDs = set([])
+pklDir = f"{ELECTER_DIR}/{dir}/preProcessedData"
+goldScoreDir = f"{ELECTER_DIR}/{dir}/Gold-Score-Docs"
+caseTextDir = f"{ELECTER_DIR}/{dir}/casetext"
+
+os.system(f"rm -rf {pklDir} {goldScoreDir} && mkdir -p {pklDir} {goldScoreDir}")
+
+with open(f"{ELECTER_DIR}/{dir}/similarity-scores.txt", "r") as mappingFile:
     lines = mappingFile.readlines()
     for line in tqdm(lines):
         strippedData = line.strip().split("\t")
         scoreData = list(filter(None, strippedData))
-        testDocIDs.update(scoreData[:-1])
-    save2Pickle(testDocIDs, f"{pklDir}/testDocsSet.pkl")
+        goldScoreDocIDs.update(scoreData[:-1])
+    save2Pickle(goldScoreDocIDs, f"{pklDir}/goldScoreDocIDs-Set.pkl")
 
-    os.system(f"rm {pklDir}/test.txt")
-    saveDocIDsToTXT("\n".join(testDocIDs), f"{pklDir}/test.txt")
-
+goldDocFiles = " ".join([goldScoreDocID + ".txt" for goldScoreDocID in goldScoreDocIDs])
+os.system(f"cd {caseTextDir} && mv {goldDocFiles} {goldScoreDir}/")
 
 # Create citation-adj-list.json [training set] excluding test DocIDs from 3
 logging.info("Creating citation-adj-list.json [training set] excluding test DocIDs from 3")
@@ -49,22 +55,14 @@ Here only positive samples are considered
 TODO: Discuss with team regarding the formulation of hard-negative signals
 """
 
-with open(f"{dir}/precedent-citation.txt", "r") as citationsInfoF:
+with open(f"{ELECTER_DIR}/{dir}/precedent-citation.txt", "r") as citationsInfoF:
     citations = citationsInfoF.readlines()
     for citation in tqdm(citations):
         docsIDs = citation.strip().split(" : ")
         frm, to = docsIDs[0], docsIDs[1]
         # Exclude test samples from data.json [training set]
-        '''
-        if frm not in testDocIDs and to not in testDocIDs:
-            if frm in data:
-                docCiteData = data[frm]
-                docCiteData[to] = posSample
-                data[frm] = docCiteData
-            else:
-                data[frm] = {to: posSample}
-        '''
-        citationAdjList[frm].append(to)
+        if frm not in goldScoreDocIDs and to not in goldScoreDocIDs:
+            citationAdjList[frm].append(to)
     with open(f"{pklDir}/citation-adj-list.json", "w") as outF:
         json.dump(citationAdjList, outF, indent=2)
 
@@ -90,7 +88,7 @@ with open(f"{pklDir}/data.json", "w") as outF:
 
 # Preprocess casetext
 logging.info("Preprocessing casetext")
-casetextDir = f"{dir}/casetext"
+casetextDir = f"{ELECTER_DIR}/{dir}/casetext"
 metadata = {}
 vocabTokens = defaultdict(int)
 headerTokens = defaultdict(int)
@@ -101,6 +99,7 @@ nDocs = len(docs)
 
 trainDocs = []
 valDocs = []
+testDocs = []
 
 for doc in tqdm(docs):
     filesEncountered += 1
@@ -116,11 +115,17 @@ for doc in tqdm(docs):
     # body = casetext[splitIndex:].strip()
 
     # Method-2 Seperation using "The Judgment was delivered"
-    s=f"grep -n 'The Judgment was delivered' {filePath}"
+    # s=f"grep -n 'The Judgment was delivered' {filePath}"
     # print(doc,os.popen(s).read().split(":"))
     # splitLineNum = int(os.popen(s).read().split(":")[0])
     # print(splitLineNum)
     # header, body = splitbyLineNumber(filePath, splitLineNum)
+
+    """
+    TODO: Get a way to differentiate header and body for casetext docs
+    In lieu of it right now all content is taken as input, i.e. body
+    """
+
     body = casetext
     metadata[docID] = {
         "paper_id": docID,
@@ -128,10 +133,14 @@ for doc in tqdm(docs):
         "abstract": ""
     }
 
-    if filesEncountered/nDocs < 0.8:
+    percentage = filesEncountered/nDocs
+
+    if percentage <= trainP:
         trainDocs.append(docID)
-    else:
+    elif percentage > trainP and percentage <= trainP + valP:
         valDocs.append(docID)
+    else:
+        testDocs.append(docID)
 
     for token in body.replace("\n", " ").split(" "):
         vocabTokens[token] += 1
@@ -140,6 +149,7 @@ for doc in tqdm(docs):
 
 saveDocIDsToTXT("\n".join(trainDocs), f"{pklDir}/train.txt")
 saveDocIDsToTXT("\n".join(valDocs), f"{pklDir}/val.txt")
+saveDocIDsToTXT("\n".join(testDocs), f"{pklDir}/test.txt")
 
 vocabTokens = sortByValues(vocabTokens)
 headerTokens = sortByValues(headerTokens)
@@ -151,8 +161,6 @@ save2Pickle(headerTokens, f"{pklDir}/headerTokens.pkl")
 
 vocabTokens = list(filter(None, vocabTokens.keys()))
 headerTokens = list(filter(None, headerTokens.keys()))
-
-ELECTER_DIR = os.environ['ELECTER_DIR']
 
 vocabDir = f"{ELECTER_DIR}/pre-experiment/legal-data-vocab/"
 
