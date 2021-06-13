@@ -79,11 +79,10 @@ for P1 in tqdm(P1s):
     for P2 in P2s:
         result[P2] = posSample
         if P2 in P1s:
-            if P2 in P1s:
-                P3s = citationAdjList[P2]
-                for P3 in P3s:
-                    if P3 not in P2s:  # condition for hard sample
-                        result[P3] = hardNegSample
+            P3s = citationAdjList[P2]
+            for P3 in P3s:
+                if P3 not in P2s:  # condition for hard negative sample
+                    result[P3] = hardNegSample
     data[P1] = result
 
 with open(f"{pklDir}/data.json", "w") as outF:
