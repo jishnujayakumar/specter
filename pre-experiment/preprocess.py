@@ -33,7 +33,7 @@ pklDir = f"{ELECTER_DIR}/{dir}/preProcessedData"
 goldScoreDir = f"{ELECTER_DIR}/{dir}/Gold-Score-Docs"
 caseTextDir = f"{ELECTER_DIR}/{dir}/casetext"
 
-os.system(f"rm -rf {pklDir} {goldScoreDir} && mkdir -p {pklDir} {goldScoreDir}")
+os.system(f"rm -rf {pklDir} && mkdir -p {pklDir} {goldScoreDir}")
 
 with open(f"{ELECTER_DIR}/{dir}/similarity-scores.txt", "r") as mappingFile:
     lines = mappingFile.readlines()
