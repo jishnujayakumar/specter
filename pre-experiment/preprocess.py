@@ -43,8 +43,8 @@ with open(f"{ELECTER_DIR}/{dir}/similarity-scores.txt", "r") as mappingFile:
         goldScoreDocIDs.update(scoreData[:-1])
     save2Pickle(goldScoreDocIDs, f"{pklDir}/goldScoreDocIDs-Set.pkl")
 
-goldDocFiles = " ".join([goldScoreDocID + ".txt" for goldScoreDocID in goldScoreDocIDs])
-os.system(f"cd {caseTextDir} && mv {goldDocFiles} {goldScoreDir}/")
+goldDocFiles = " ".join(["{caseTextDir}/{goldScoreDocID}.txt" for goldScoreDocID in goldScoreDocIDs])
+os.system(f"mv {goldDocFiles} {goldScoreDir}/")
 
 # Create citation-adj-list.json [training set] excluding test DocIDs from 3
 logging.info("Creating citation-adj-list.json [training set] excluding test DocIDs from 3")
