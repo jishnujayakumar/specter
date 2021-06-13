@@ -1,4 +1,4 @@
-directory=$ELECTER_DIR/$1
+directory=$1
 trainP=$2
 
 echo "Replacement..."
