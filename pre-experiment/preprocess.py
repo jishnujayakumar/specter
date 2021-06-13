@@ -56,13 +56,13 @@ with open(f"{dir}/precedent-citation.txt", "r") as citationsInfoF:
         docsIDs = citation.strip().split(" : ")
         frm, to = docsIDs[0], docsIDs[1]
         # Exclude test samples from data.json [training set]
-        if frm not in testDocIDs and to not in testDocIDs:
-            if frm in data:
-                docCiteData = data[frm]
-                docCiteData[to] = posSample
-                data[frm] = docCiteData
-            else:
-                data[frm] = {to: posSample}
+        # if frm not in testDocIDs and to not in testDocIDs:
+        if frm in data:
+            docCiteData = data[frm]
+            docCiteData[to] = posSample
+            data[frm] = docCiteData
+        else:
+            data[frm] = {to: posSample}
     with open(f"{pklDir}/postive_data.json", "w") as outF:
         json.dump(data, outF, indent=2)
 
@@ -71,14 +71,28 @@ data2 = {}
 dkeys = data.keys()
 for P1 in tqdm(dkeys):
     if P1 in dkeys:
+        _ = data[P1]
         P2s = data[P1].keys()
         for P2 in P2s:
             if P2 in dkeys:
                 P3s = data[P2].keys()
                 for P3 in P3s:
                     if P3 not in P2s:  # condition for hard sample
-                        data2[P1] = data[P1]
-                        data2[P3] = {P1: negSample}
+
+
+
+
+
+                    data2 = _
+
+
+
+
+
+
+
+
+
 
 with open(f"{pklDir}/data.json", "w") as outF:
     json.dump(data2, outF, indent=2)
