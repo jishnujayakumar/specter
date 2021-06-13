@@ -16,7 +16,7 @@ python3 get-legal-bert.py
 # Set git repo directory path as an environment variable 
 export ELECTER_DIR=`pwd`
 
-chmod a+x pre-experiment/preprocess-legal-data.sh
+chmod a+x pre-experiment/preprocess-legal-data.sh 0.6   # 0.6 is train set percentage
 
 # Place the following txt files in in specter/legal-data directory 
 # mapping.txt no_doc_mapping.txt  precedent-citation.txt  similarity-scores.txt

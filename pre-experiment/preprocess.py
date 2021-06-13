@@ -11,7 +11,7 @@ logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.INFO)
 
 mappingData = None
 dir = sys.argv[1]
-trainP = int(sys.argv[2])
+trainP = float(sys.argv[2])
 valP = testP = (1-trainP)/2
 ELECTER_DIR = os.environ['ELECTER_DIR']
 
