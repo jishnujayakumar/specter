@@ -3,6 +3,18 @@
 ## Requirements
 - Python >= 3.6
 
+## Run the entire-pipeline
+```bash
+chmod a+x run-pipeline.sh
+
+# Place casetext as well as other meta files in <legal-data-dir>
+# <train-percentage>: percentage of casetex files to be considered as training data
+# <sample-percentage>: percentage of casetex files that would act as the entire dataset 
+# useful for quick experimentation
+./run-pipeline.sh <legal-data-dir> <train-percentage> <sample-percentage>
+# E.g. ./run-pipeline.sh legal-data-sample 0.8 1
+```
+
 ### To get legal-bert
 ```bash
 cd pre-experiment/
