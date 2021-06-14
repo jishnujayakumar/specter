@@ -35,7 +35,7 @@ def computeEmbeddingSimilarity(filePath):
                 cosine_similarity(
                     [result[line[0]]],
                     [result[line[1]]]
-                )
+                )[0]
             )
         df = pd.DataFrame()
         df['fromDocID'] = frmArr
