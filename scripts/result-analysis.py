@@ -31,9 +31,9 @@ def computeEmbeddingSimilarity(filePath):
             toArr.append(line[1])
             goldSimArr.append(line[2])
 
-            frm = result[line[0]].reshape(1,3)
-            to = result[line[1]].reshape(1,3)
-            cosineSim = cosine_similarity(from, to)
+            frm = result[line[0]].reshape(1, 3)
+            to = result[line[1]].reshape(1, 3)
+            cosineSim = cosine_similarity(frm, to)
             cosineArr.append(
                 cosineSim[0][0]
             )
