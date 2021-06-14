@@ -48,7 +48,7 @@ def computeEmbeddingSimilarity(filePath):
                     cmap=plt.get_cmap('coolwarm'), cbar=False, ax=ax)
         ax.set_yticklabels(ax.get_yticklabels(), rotation="horizontal")
         plt.savefig(f"{filePath}/pearson-correlation-gold-sim-vs-cosine-sim.png", bbox_inches='tight', pad_inches=0.0)
-        df.to_csv(f"{filePath}/sim-vs-cosine-sim-result.csv")
+        df.to_csv(f"{filePath}/sim-vs-cosine-sim-result.csv", index=False)
 
 
 dir = sys.argv[1]
