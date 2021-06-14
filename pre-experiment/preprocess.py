@@ -61,6 +61,21 @@ goldDocFiles = " ".join([
     for goldScoreDocID in goldScoreDocIDs])
 os.system(f"mv {goldDocFiles} {goldScoreDir}/")
 
+metadata = {}
+for goldScoreDocID in goldScoreDocIDs:
+    filePath = f"{goldScoreDir}/{goldScoreDocID}.txt"
+    casetext = getCaseTextContent(filePath).lower()
+    body = casetext
+    metadata[goldScoreDocID] = {
+        "paper_id": goldScoreDocID,
+        "title": body,
+        "abstract": ""
+    }
+with open(f"{goldScoreDir}/metadata.json", "w") as outF:
+    json.dump(metadata, outF, indent=2)
+
+saveDocIDsToTXT("\n".join(goldScoreDocIDs), f"{goldScoreDir}/gold-docs.txt")
+
 # Create citation-adj-list.json [training set] excluding test DocIDs from 3
 logging.info("Creating citation-adj-list.json [training set] excluding \
 test DocIDs from 3")
