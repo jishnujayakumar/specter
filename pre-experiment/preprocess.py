@@ -25,7 +25,8 @@ args = parser.parse_args()
 mappingData = None
 dir = args.dir
 trainP = args.trainDataPercent
-valP = testP = (1-trainP)/2
+valP = 1-trainP
+testP = 0
 ELECTER_DIR = os.environ['ELECTER_DIR']
 
 # 1. Map similarity-scores.txt docIDs using mapper.txt

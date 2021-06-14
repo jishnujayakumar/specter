@@ -3,6 +3,7 @@ import pickle as pkl
 from collections import OrderedDict
 from tqdm import tqdm
 
+
 def save2Pickle(data, filepath):
     os.system(f"touch {filepath}")
     with open(filepath, "wb") as outF:

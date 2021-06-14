@@ -40,6 +40,9 @@ python scripts/embed.py \
 --cuda-device -1 \
 --batch-size 32 \
 --output-file $LEGAL_DATA_DIR/embeddings-output-gold-docs.jsonl \
---vocab-dir $LEGAL_DATA_DIR/legal-data-vocab/
+--vocab-dir $LEGAL_DATA_DIR/legal-data-vocab/ \
+--included-text-fields title
+
+python3 ./scripts/result-analysis.py $LEGAL_DATA_DIR
 
 

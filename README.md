@@ -19,7 +19,7 @@ chmod a+x run-pipeline.sh
 # <train-percentage>: percentage of casetex files to be considered as training data
 # <sample-percentage>: percentage of casetex files that would act as the entire dataset 
 # useful for quick experimentation
-./run-pipeline.sh <legal-data-dir> <train-percentage> <sample-percentage>
+./scripts/run-pipeline.sh <legal-data-dir> <train-percentage> <sample-percentage>
 # E.g. ./run-pipeline.sh legal-data-sample 0.8 1
 ```
 
@@ -35,7 +35,7 @@ chmod a+x pre-experiment/preprocess-legal-data.sh
 # mapping.txt no_doc_mapping.txt  precedent-citation.txt  similarity-scores.txt
 # Output-Location: $ELECTER_DIR/legal-data/preProcessedData
 # 0.6 is train set percentage, 0.1 docs would be sampled from the total dataset
-./pre-experiment/preprocess-legal-data.sh legal-data 0.6 0.1
+./pre-experiment/preprocess-legal-data.sh legal-data 0.95 0.1
 
 # Optional: To create a subset of nsamples
 # NOTE: To be run only after preceeding steps
@@ -58,6 +58,11 @@ python3 generate-sample-data.py <total-number-of-samples>
 ```
 - Output directory: **pre-experiment/generated\_data**
 
+
+### For inference results [Gold sim vs cosine similarity]
+```bash
+python3 ./scripts/result-analysis.py legal-data
+```
 --------------------------------------------------------------------------
 
 ![plot](https://i.ibb.co/3TC1WmG/specter-logo-cropped.png)
