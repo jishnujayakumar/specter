@@ -3,7 +3,15 @@
 ## Requirements
 - Python >= 3.6
 
-## Run the entire-pipeline
+### To get legal-bert
+```bash
+cd pre-experiment/
+python3 get-legal-bert.py
+```
+- Output will be saved in **pre-experiment/** directory
+
+## Two ways:
+### 1. Run the entire-pipeline
 ```bash
 chmod a+x run-pipeline.sh
 
@@ -15,14 +23,7 @@ chmod a+x run-pipeline.sh
 # E.g. ./run-pipeline.sh legal-data-sample 0.8 1
 ```
 
-### To get legal-bert
-```bash
-cd pre-experiment/
-python3 get-legal-bert.py
-```
-- Output will be saved in **pre-experiment/** directory
-
-
+### 2. Running each step in the pipeline independently
 ### Preprocess and replace filenames from mapper.txt to similarity-scores.txt
 ```bash
 # Set git repo directory path as an environment variable 
