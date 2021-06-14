@@ -6,7 +6,7 @@ from tqdm import tqdm
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
-from sklearn.metrics.pairwise import cosine_similarity
+from scipy import spatial
 
 
 logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.INFO)
@@ -32,10 +32,10 @@ def computeEmbeddingSimilarity(filePath):
             toArr.append(line[1])
             goldSimArr.append(line[2])
             cosineArr.append(
-                cosine_similarity(
-                    [result[line[0]]],
-                    [result[line[1]]]
-                )[0]
+                1 - spatial.distance.cosine(
+                    result[line[0]],
+                    result[line[1]]
+                )
             )
         df = pd.DataFrame()
         df['fromDocID'] = frmArr
