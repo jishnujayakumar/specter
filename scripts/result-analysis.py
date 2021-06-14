@@ -33,7 +33,7 @@ def computeEmbeddingSimilarity(filePath):
             line = list(filter(None, line.strip().split("\t")))
             frmArr.append(line[0])
             toArr.append(line[1])
-            goldSimArr.append(line[2])
+            goldSimArr.append(float(line[2]))
 
             cosineArr.append(
                 cosine_similarity(
@@ -48,8 +48,7 @@ def computeEmbeddingSimilarity(filePath):
         df['cosineSimilarityValue'] = cosineArr
 
         fig, ax = plt.subplots()
-        sns.heatmap(df['goldSimilarityValue'].corr(df['cosineSimilarityValue'],
-                    method='pearson'), annot=True, fmt='.4f',
+        sns.heatmap(df.corr(method='pearson'), annot=True, fmt='.4f', 
                     cmap=plt.get_cmap('coolwarm'), cbar=False, ax=ax)
         ax.set_yticklabels(ax.get_yticklabels(), rotation="horizontal")
         plt.savefig(f"{filePath}/pearson-correlation-gold-sim-vs-cosine-sim.png", bbox_inches='tight', pad_inches=0.0)
