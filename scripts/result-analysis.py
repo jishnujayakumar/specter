@@ -6,6 +6,7 @@ from tqdm import tqdm
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
+import numpy as np
 from sklearn.metrics.pairwise import cosine_similarity
 
 logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.INFO)
@@ -31,8 +32,8 @@ def computeEmbeddingSimilarity(filePath):
             toArr.append(line[1])
             goldSimArr.append(line[2])
 
-            frm = result[line[0]].reshape(1, 3)
-            to = result[line[1]].reshape(1, 3)
+            frm = np.array(result[line[0]]).reshape(1, 3)
+            to = np.array(result[line[1]]).reshape(1, 3)
             cosineSim = cosine_similarity(frm, to)
             cosineArr.append(
                 cosineSim[0][0]
