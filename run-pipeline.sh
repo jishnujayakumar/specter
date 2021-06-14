@@ -12,7 +12,8 @@ python specter/data_utils/create_training_files.py \
 --outdir $LEGAL_DATA_DIR/preProcessedData/experimentData \
 --bert_vocab pre-experiment/legal-bert-base-uncased/vocab.txt \
 --included-text-fields title \
---ratio_hard_negatives 0.4
+--ratio_hard_negatives 0.4 \
+--njobs 24
 
 # Perform training
 rm -rf $LEGAL_DATA_DIR-model-output/ && ./scripts/run-exp-simple.sh -c experiment_configs/simple.jsonnet \
