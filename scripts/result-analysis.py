@@ -29,7 +29,7 @@ def computeEmbeddingSimilarity(filePath):
             line = list(filter(None, line.strip().split("\t")))
             frmArr.append(line[0])
             toArr.append(line[1])
-            goldSimArr.append(line[2])
+            goldSimArr.append(float(line[2]))
         df = pd.DataFrame()
         df['fromDocID'] = frmArr
         df['toDocID'] = toArr
