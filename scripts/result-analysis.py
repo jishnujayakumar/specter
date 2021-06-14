@@ -33,8 +33,8 @@ def computeEmbeddingSimilarity(filePath):
             goldSimArr.append(line[2])
             cosineArr.append(
                 cosine_similarity(
-                    result[line[0]],
-                    result[line[1]]
+                    [result[line[0]]],
+                    [result[line[1]]]
                 )
             )
         df = pd.DataFrame()
