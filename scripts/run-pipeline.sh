@@ -7,7 +7,7 @@ export MAX_SEQ_LENGTH=$4
 ./pre-experiment/preprocess-legal-data.sh $LEGAL_DATA_DIR $2 $3
 
 # Create triplets files
-python $ELECTER_DIR/data_utils/create_training_files.py \
+python $ELECTER_DIR/specter/data_utils/create_training_files.py \
 --data-dir $LEGAL_DATA_DIR/preProcessedData \
 --metadata $LEGAL_DATA_DIR/preProcessedData/metadata.json \
 --outdir $LEGAL_DATA_DIR/preProcessedData/experimentData \
