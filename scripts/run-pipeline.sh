@@ -16,7 +16,7 @@ python specter/data_utils/create_training_files.py \
 --ratio_hard_negatives 0.4 \
 --njobs 24
 
-NUM_TRAIN_INSTANCES=`grep 'train' legal-data/preProcessedData/experimentData/data-metrics.json | sed -r 's/^[^:]*:(.*)$/\1/' | sed 's/ //g' | sed 's/,//g'`
+NUM_TRAIN_INSTANCES=`grep 'train' $LEGAL_DATA_DIR/preProcessedData/experimentData/data-metrics.json | sed -r 's/^[^:]*:(.*)$/\1/' | sed 's/ //g' | sed 's/,//g'`
 
 # Perform training
 rm -rf $LEGAL_DATA_DIR-model-output/ && ./scripts/run-exp-simple.sh -c experiment_configs/simple.jsonnet \
