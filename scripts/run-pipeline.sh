@@ -1,7 +1,7 @@
 export ELECTER_DIR=`pwd`
 chmod a+x pre-experiment/preprocess-legal-data.sh
 export LEGAL_DATA_DIR=$1
-export MAX_SEQ_LEN=$4
+export MAX_SEQ_LENGTH=$4
 
 # Preprocess Data
 ./pre-experiment/preprocess-legal-data.sh $LEGAL_DATA_DIR $2 $3

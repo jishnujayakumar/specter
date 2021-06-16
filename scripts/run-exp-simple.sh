@@ -136,7 +136,7 @@ export LAZY=$lazy
 export TRAINING_DATA_INSTANCES=$num_train_instances
 export BERT_REQUIRES_GRAD=$bert_requires_grad
 export BERT_MODEL=$BERT_MODEL
-export MAX_SEQ_LEN=$max_seq_len
+export MAX_SEQ_LEN=$MAX_SEQ_LENGTH
 export INCLUDE_VENUE=$INCLUDE_VENUE
 if [ -z "${BERT_VOCAB+x}" ]
 then
