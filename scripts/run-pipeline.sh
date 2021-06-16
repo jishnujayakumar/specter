@@ -1,6 +1,7 @@
 export ELECTER_DIR=`pwd`
 chmod a+x pre-experiment/preprocess-legal-data.sh
 export LEGAL_DATA_DIR=$1
+export MAX_SEQ_LEN=$4
 
 # Preprocess Data
 ./pre-experiment/preprocess-legal-data.sh $LEGAL_DATA_DIR $2 $3
@@ -15,12 +16,14 @@ python specter/data_utils/create_training_files.py \
 --ratio_hard_negatives 0.4 \
 --njobs 24
 
+NUM_TRAIN_INSTANCES=`grep 'train' legal-data/preProcessedData/experimentData/data-metrics.json | sed -r 's/^[^:]*:(.*)$/\1/' | sed 's/ //g' | sed 's/,//g'`
+
 # Perform training
 rm -rf $LEGAL_DATA_DIR-model-output/ && ./scripts/run-exp-simple.sh -c experiment_configs/simple.jsonnet \
 -s $LEGAL_DATA_DIR-model-output/ --num-epochs 10 --batch-size 16 \
 --train-path $LEGAL_DATA_DIR/preProcessedData/experimentData/data-train.p \
 --dev-path $LEGAL_DATA_DIR/preProcessedData/experimentData/data-val.p \
---num-train-instances 535 --cuda-device -1
+--num-train-instances $NUM_TRAIN_INSTANCES --cuda-device -1 --max-seq-len $MAX_SEQ_LEN 
 
 # Move model artifacts to appropriate tar.gz file
 cd $LEGAL_DATA_DIR-model-output/

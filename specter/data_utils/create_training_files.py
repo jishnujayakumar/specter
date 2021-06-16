@@ -388,7 +388,7 @@ def get_instances(data, query_ids_file, metadata, data_source=None, n_jobs=1, n_
                                           margin_fraction=margin_fraction, ratio_hard_negatives=ratio_hard_negatives,
                                           samples_per_query=samples_per_query)
 
-    set_values(max_sequence_length=512,
+    set_values(max_sequence_length=int(os.environ['MAX_SEQ_LEN']),
                concat_title_abstract=concat_title_abstract,
                data_source=data_source,
                included_text_fields=included_text_fields)
