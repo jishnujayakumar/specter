@@ -14,7 +14,7 @@ python $ELECTER_DIR/data_utils/create_training_files.py \
 --bert_vocab $ELECTER_DIR/pre-experiment/legal-bert-base-uncased/vocab.txt \
 --included-text-fields title \
 --ratio_hard_negatives 0.4 \
---njobs 24
+--njobs 2
 
 NUM_TRAIN_INSTANCES=`grep 'train' $LEGAL_DATA_DIR/preProcessedData/experimentData/data-metrics.json | sed -r 's/^[^:]*:(.*)$/\1/' | sed 's/ //g' | sed 's/,//g'`
 
