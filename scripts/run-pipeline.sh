@@ -7,11 +7,11 @@ export MAX_SEQ_LEN=$4
 ./pre-experiment/preprocess-legal-data.sh $LEGAL_DATA_DIR $2 $3
 
 # Create triplets files
-python specter/data_utils/create_training_files.py \
+python $ELECTER_DIR/data_utils/create_training_files.py \
 --data-dir $LEGAL_DATA_DIR/preProcessedData \
 --metadata $LEGAL_DATA_DIR/preProcessedData/metadata.json \
 --outdir $LEGAL_DATA_DIR/preProcessedData/experimentData \
---bert_vocab pre-experiment/legal-bert-base-uncased/vocab.txt \
+--bert_vocab $ELECTER_DIR/pre-experiment/legal-bert-base-uncased/vocab.txt \
 --included-text-fields title \
 --ratio_hard_negatives 0.4 \
 --njobs 24
@@ -19,7 +19,8 @@ python specter/data_utils/create_training_files.py \
 NUM_TRAIN_INSTANCES=`grep 'train' $LEGAL_DATA_DIR/preProcessedData/experimentData/data-metrics.json | sed -r 's/^[^:]*:(.*)$/\1/' | sed 's/ //g' | sed 's/,//g'`
 
 # Perform training
-rm -rf $LEGAL_DATA_DIR-model-output/ && ./scripts/run-exp-simple.sh -c experiment_configs/simple.jsonnet \
+rm -rf $LEGAL_DATA_DIR-model-output/ && \
+$ELECTER_DIR/scripts/run-exp-simple.sh -c $ELECTER_DIR/experiment_configs/simple.jsonnet \
 -s $LEGAL_DATA_DIR-model-output/ --num-epochs 10 --batch-size 16 \
 --train-path $LEGAL_DATA_DIR/preProcessedData/experimentData/data-train.p \
 --dev-path $LEGAL_DATA_DIR/preProcessedData/experimentData/data-val.p \
@@ -36,7 +37,7 @@ tar czC model . --transform='s,^\./,,' >| model.tar.gz
 # Run inference on gold-docs
 cd $ELECTER_DIR
 CUDA_VISIBLE_DEVICES=1 \
-python scripts/embed.py \
+python $ELECTER_DIR/scripts/embed.py \
 --ids $LEGAL_DATA_DIR/Gold-Score-Docs/gold-docs.txt \
 --model $LEGAL_DATA_DIR-model-output/model.tar.gz \
 --metadata $LEGAL_DATA_DIR/Gold-Score-Docs/metadata.json \
@@ -46,6 +47,6 @@ python scripts/embed.py \
 --vocab-dir $LEGAL_DATA_DIR/legal-data-vocab/ \
 --included-text-fields title
 
-python3 ./scripts/result-analysis.py $LEGAL_DATA_DIR
+python3 $ELECTER_DIR/scripts/result-analysis.py $LEGAL_DATA_DIR
 
 
