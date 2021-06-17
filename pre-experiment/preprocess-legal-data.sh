@@ -1,4 +1,4 @@
-directory=$ELECTER_DIR/$1
+directory=$1
 
 echo "Replacement..."
 sed -i 's/\ \ =\ \ / : /g' $directory/mapping.txt 

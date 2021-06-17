@@ -15,18 +15,23 @@ python $ELECTER_DIR/specter/data_utils/create_training_files.py \
 --included-text-fields title \
 --ratio_hard_negatives 0.4
 
-NUM_TRAIN_INSTANCES=`grep 'train' $LEGAL_DATA_DIR/preProcessedData/experimentData/data-metrics.json | sed -r 's/^[^:]*:(.*)$/\1/' | sed 's/ //g' | sed 's/,//g'`
+NUM_TRAIN_INSTANCES=`grep 'train' $LEGAL_DATA_DIR/preProcessedData/experimentData/data-metrics.json | \
+sed -r 's/^[^:]*:(.*)$/\1/' | \
+sed 's/ //g' | \
+sed 's/,//g'`
+
+model_out_dir="$LEGAL_DATA_DIR/model-output-$2-$3-$MAX_SEQ_LENGTH"
 
 # Perform training
 rm -rf $LEGAL_DATA_DIR-model-output/ && \
 $ELECTER_DIR/scripts/run-exp-simple.sh -c $ELECTER_DIR/experiment_configs/simple.jsonnet \
--s $LEGAL_DATA_DIR-model-output/ --num-epochs 10 --batch-size 16 \
+-s $model_out_dir/ --num-epochs 10 --batch-size 16 \
 --train-path $LEGAL_DATA_DIR/preProcessedData/experimentData/data-train.p \
 --dev-path $LEGAL_DATA_DIR/preProcessedData/experimentData/data-val.p \
 --num-train-instances $NUM_TRAIN_INSTANCES --cuda-device -1 --max-seq-len $MAX_SEQ_LEN 
 
 # Move model artifacts to appropriate tar.gz file
-cd $LEGAL_DATA_DIR-model-output/
+cd $model_out_dir/
 mv best.th weights.th
 mkdir -p model
 mv weights.th config.json model/
@@ -38,7 +43,7 @@ cd $ELECTER_DIR
 CUDA_VISIBLE_DEVICES=1 \
 python $ELECTER_DIR/scripts/embed.py \
 --ids $LEGAL_DATA_DIR/Gold-Score-Docs/gold-docs.txt \
---model $LEGAL_DATA_DIR-model-output/model.tar.gz \
+--model $model_out_dir/model.tar.gz \
 --metadata $LEGAL_DATA_DIR/Gold-Score-Docs/metadata.json \
 --cuda-device -1 \
 --batch-size 32 \

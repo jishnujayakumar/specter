@@ -31,25 +31,25 @@ ELECTER_DIR = os.environ['ELECTER_DIR']
 
 # 1. Map similarity-scores.txt docIDs using mapper.txt
 logging.info("Mapping similarity-scores.txt docIDs using mapper.txt")
-with open(f"{ELECTER_DIR}/{dir}/mapping.txt", "r") as mappingFile:
+with open(f"{dir}/mapping.txt", "r") as mappingFile:
     lines = mappingFile.readlines()
     for line in tqdm(lines):
         mappingData = line.strip().split(" : ")
         frm = mappingData[0].replace("_", "\\_")
         to = mappingData[1].replace("_", "\\_")
         os.system(f"sed -i 's/{frm}/{to}/g' \
-        {ELECTER_DIR}/{dir}/similarity-scores.txt")
+        {dir}/similarity-scores.txt")
 
 
 # 2. Extract test docIDs from similarity-scores.txt
 logging.info("Extracting test docIDs from similarity-scores.txt")
 goldScoreDocIDs = set([])
-pklDir = f"{ELECTER_DIR}/{dir}/preProcessedData"
-goldScoreDir = f"{ELECTER_DIR}/{dir}/Gold-Score-Docs"
-caseTextDir = f"{ELECTER_DIR}/{dir}/casetext"
+pklDir = f"{dir}/preProcessedData"
+goldScoreDir = f"{dir}/Gold-Score-Docs"
+caseTextDir = f"{dir}/casetext"
 
 os.system(f"mkdir -p {pklDir} {goldScoreDir}")
-with open(f"{ELECTER_DIR}/{dir}/similarity-scores.txt", "r") as mappingFile:
+with open(f"{dir}/similarity-scores.txt", "r") as mappingFile:
     lines = mappingFile.readlines()
     for line in tqdm(lines):
         strippedData = line.strip().split("\t")
@@ -87,12 +87,12 @@ citations. Here only positive samples are considered
 TODO: Discuss with team regarding the formulation of hard-negative signals
 """
 
-casetextDir = f"{ELECTER_DIR}/{dir}/casetext"
+casetextDir = f"{dir}/casetext"
 docs = os.listdir(casetextDir)
 nDocs = int(len(docs)*args.samplePercent)
 docs = [doc.split(".")[0] for doc in docs[:nDocs]]
 
-with open(f"{ELECTER_DIR}/{dir}/precedent-citation.txt", "r") \
+with open(f"{dir}/precedent-citation.txt", "r") \
         as citationsInfoF:
     citations = citationsInfoF.readlines()
     for citation in tqdm(citations):
@@ -197,7 +197,7 @@ save2Pickle(headerTokens, f"{pklDir}/headerTokens.pkl")
 vocabTokens = list(filter(None, vocabTokens.keys()))
 headerTokens = list(filter(None, headerTokens.keys()))
 
-vocabDir = f"{ELECTER_DIR}/{dir}/legal-data-vocab/"
+vocabDir = f"{dir}/legal-data-vocab/"
 
 os.system(f"mkdir -p {vocabDir} && \
     cp {ELECTER_DIR}/data/vocab/non_padded_namespaces.txt {vocabDir}")
