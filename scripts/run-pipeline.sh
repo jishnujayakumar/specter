@@ -13,8 +13,7 @@ python $ELECTER_DIR/specter/data_utils/create_training_files.py \
 --outdir $LEGAL_DATA_DIR/preProcessedData/experimentData \
 --bert_vocab $ELECTER_DIR/pre-experiment/legal-bert-base-uncased/vocab.txt \
 --included-text-fields title \
---ratio_hard_negatives 0.4 \
---njobs 2
+--ratio_hard_negatives 0.4
 
 NUM_TRAIN_INSTANCES=`grep 'train' $LEGAL_DATA_DIR/preProcessedData/experimentData/data-metrics.json | sed -r 's/^[^:]*:(.*)$/\1/' | sed 's/ //g' | sed 's/,//g'`
 
