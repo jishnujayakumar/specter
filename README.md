@@ -20,7 +20,7 @@ chmod a+x run-pipeline.sh
 # <sample-percentage>: percentage of casetex files that would act as the entire dataset 
 # useful for quick experimentation
 ./scripts/run-pipeline.sh <legal-data-dir> <train-percentage> <sample-percentage> <BERT_MAX_SEQ_LEN>
-# E.g. ./run-pipeline.sh legal-data-sample 0.9 1 8192
+# E.g. ./scripts/run-pipeline.sh legal-data .9 1 8192
 ```
 
 ### 2. Running each step in the pipeline independently
