@@ -32,13 +32,14 @@ def prepareLegalBertArtifacts(model):
         saveToDisk(artifact, filename)
 
     logging.info(f"Saving to {filename}.tar.gz")
-    
+
     """ Uncomment to replace max_position_embeddings with os.environ['MAX_SEQ_LENGTH']
     Make sure BERT architecture is also trained on this parameter value else won't work
     os.system(f"sed -i \
         's/\"max_position_embeddings\": 512/\"max_position_embeddings\": \
             {os.environ['MAX_SEQ_LENGTH']}/g' ./{filename}/config.json")
     """
+
     os.system(f"mv ./{filename}/config.json ./{filename}/bert_config.json && \
         tar czC {filename} . --transform='s,^\./,,' >| {filename}.tar.gz")
 
