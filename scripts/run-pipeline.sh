@@ -23,12 +23,12 @@ sed 's/,//g'`
 model_out_dir="$LEGAL_DATA_DIR/model-output-$2-$3-$MAX_SEQ_LENGTH"
 
 # Perform training
-rm -rf $LEGAL_DATA_DIR-model-output/ && \
+rm -rf $model_out_dir/ && /
 $ELECTER_DIR/scripts/run-exp-simple.sh -c $ELECTER_DIR/experiment_configs/simple.jsonnet \
 -s $model_out_dir/ --num-epochs 10 --batch-size 16 \
 --train-path $LEGAL_DATA_DIR/preProcessedData/experimentData/data-train.p \
 --dev-path $LEGAL_DATA_DIR/preProcessedData/experimentData/data-val.p \
---num-train-instances $NUM_TRAIN_INSTANCES --cuda-device -1 --max-seq-len $MAX_SEQ_LEN 
+--num-train-instances $NUM_TRAIN_INSTANCES --cuda-device -1 --max-seq-len $MAX_SEQ_LENGTH 
 
 # Move model artifacts to appropriate tar.gz file
 cd $model_out_dir/

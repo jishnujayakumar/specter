@@ -22,14 +22,14 @@ local CUDA_DEVICE = std.extVar("CUDA_DEVICE");
 {
     "dataset_reader": {
         "type": "specter_data_reader_pickled",
-        "concat_title_abstract": true,
+        "concat_title_abstract": false,
         "lazy": true,
         "max_sequence_length": MAX_SEQ_LEN,
         "token_indexers": {
             "bert": {
                 "type": BERT_MODEL,
                 "do_lowercase": true,
-                "truncate_long_sequences": true,
+                "truncate_long_sequences": false,
                 [if BERT_MODEL == 'bert-pretrained' && BERT_WEIGHTS != 'bert-pretrained' then "pretrained_model"]: BERT_VOCAB,
                 [if BERT_MODEL == 'pretrained_transformer' then "model_name"]: BERT_WEIGHTS,
             }
