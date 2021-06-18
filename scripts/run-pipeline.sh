@@ -4,7 +4,10 @@ export LEGAL_DATA_DIR=$1
 export MAX_SEQ_LENGTH=$4
 
 # Get legal-bert
-python $ELECTER_DIR/pre-experiment/get-legal-bert.py 
+cd $ELECTER_DIR/pre-experiment/
+python get-legal-bert.py 
+
+cd $ELECTER_DIR
 
 # Preprocess Data
 ./pre-experiment/preprocess-legal-data.sh $LEGAL_DATA_DIR $2 $3
