@@ -11,5 +11,5 @@ sklearn
 ijson
 Faker
 seaborn
-torch==1.5.1
-torchvision==0.6.1
+torch==1.0.1
+torchvision==0.2.2
