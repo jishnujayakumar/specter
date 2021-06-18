@@ -15,10 +15,7 @@ python $ELECTER_DIR/specter/data_utils/create_training_files.py \
 --included-text-fields title \
 --ratio_hard_negatives 0.4
 
-NUM_TRAIN_INSTANCES=`grep 'train' $LEGAL_DATA_DIR/preProcessedData/experimentData/data-metrics.json | \
-sed -r 's/^[^:]*:(.*)$/\1/' | \
-sed 's/ //g' | \
-sed 's/,//g'`
+NUM_TRAIN_INSTANCES=`grep 'train' $LEGAL_DATA_DIR/preProcessedData/experimentData/data-metrics.json | sed -r 's/^[^:]*:(.*)$/\1/' | sed 's/ //g' | sed 's/,//g'`
 
 model_out_dir="$LEGAL_DATA_DIR/model-output-$2-$3-$MAX_SEQ_LENGTH"
 
