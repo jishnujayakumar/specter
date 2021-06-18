@@ -4,7 +4,7 @@
 # If the above installation is not working then uninstall and use the following [added: 17 May 2021]
 # allennlp==0.9.0
 
-tqdm=4.41.0
+tqdm==4.41.0
 dill
 jsonlines
 pandas
