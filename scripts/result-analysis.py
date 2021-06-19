@@ -75,7 +75,7 @@ def computeEmbeddingSimilarity(filePath):
         "predLabel": pred
     }
 
-    os.system(f'echo "{json.dumps(resultMetrics)}" >> {filePath}/result-metrics.json')
+    os.system(f'echo "{json.dumps(resultMetrics)}" > {filePath}/result-metrics.json')
 
 
 dir = sys.argv[1]
