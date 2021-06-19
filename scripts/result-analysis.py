@@ -7,6 +7,8 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 import numpy as np
+from sklearn.metrics import mean_squared_error, f1_score
+
 
 logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.INFO)
 
@@ -17,6 +19,7 @@ def cosine_similarity(a, b):
 
 def computeEmbeddingSimilarity(filePath):
     result = {}
+    thresholdP = 0.5
 
     with jsonlines.open(f"{filePath}/embeddings-output-gold-docs.jsonl", 'r') as embeddingResults:
         for res in embeddingResults.iter():
@@ -26,6 +29,7 @@ def computeEmbeddingSimilarity(filePath):
     toArr = []
     goldSimArr = []
     cosineArr = []
+    corr = None
 
     with open(f"{filePath}/similarity-scores.txt", "r") as simScoreF:
         lines = simScoreF.readlines()
@@ -47,13 +51,24 @@ def computeEmbeddingSimilarity(filePath):
         df['goldSimilarityValue'] = goldSimArr
         df['cosineSimilarityValue'] = cosineArr
 
+        corr = df.corr(method='pearson')
         fig, ax = plt.subplots()
-        sns.heatmap(df.corr(method='pearson'), annot=True, fmt='.4f', 
+        sns.heatmap(corr, annot=True, fmt='.4f', 
                     cmap=plt.get_cmap('coolwarm'), cbar=False, ax=ax)
         ax.set_yticklabels(ax.get_yticklabels(), rotation="horizontal")
         plt.savefig(f"{filePath}/pearson-correlation-gold-sim-vs-cosine-sim.png", bbox_inches='tight', pad_inches=0.0)
         df.to_csv(f"{filePath}/sim-vs-cosine-sim-result.csv", index=False)
 
+    goldSimArr = [1 if score > thresholdP else 0 for score in goldSimArr]
+    cosineArr = [1 if score > thresholdP else 0 for score in cosineArr]
+
+    resultMetrics = {
+        "f1-score": f1_score(goldSimArr, cosineArr),
+        "mse": mean_squared_error(goldSimArr, cosineArr),
+        "pearson-corr": corr
+    }
+
+    os.system(f'cat {resultMetrics} >> {filePath}/result-metrics.json')
 
 dir = sys.argv[1]
 ELECTER_DIR = os.environ['ELECTER_DIR']
