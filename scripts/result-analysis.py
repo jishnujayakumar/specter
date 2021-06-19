@@ -66,7 +66,7 @@ def computeEmbeddingSimilarity(filePath):
     resultMetrics = {
         "f1-score": f1_score(goldSimArr, cosineArr),
         "mse": mean_squared_error(goldSimArr, cosineArr),
-        "pearson-corr": corr
+        "pearson-corr": json.dumps(json.loads(corr.to_json))
     }
     os.system(f'echo "{json.dumps(resultMetrics)}" >> {filePath}/result-metrics.json')
 
