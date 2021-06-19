@@ -31,6 +31,7 @@ def computeEmbeddingSimilarity(filePath):
     goldSimArr = []
     cosineArr = []
     corr = None
+    pearsonOutputF=f"{filePath}/pearson-correlation-gold-sim-vs-cosine-sim.png"
 
     with open(f"{filePath}/similarity-scores.txt", "r") as simScoreF:
         lines = simScoreF.readlines()
@@ -57,19 +58,21 @@ def computeEmbeddingSimilarity(filePath):
         sns.heatmap(corr, annot=True, fmt='.4f', 
                     cmap=plt.get_cmap('coolwarm'), cbar=False, ax=ax)
         ax.set_yticklabels(ax.get_yticklabels(), rotation="horizontal")
-        plt.savefig(f"{filePath}/pearson-correlation-gold-sim-vs-cosine-sim.png", bbox_inches='tight', pad_inches=0.0)
+        plt.savefig(pearsonOutputF, bbox_inches='tight', pad_inches=0.0)
         df.to_csv(f"{filePath}/sim-vs-cosine-sim-result.csv", index=False)
 
     goldSimArr = [1 if score > thresholdP else 0 for score in goldSimArr]
     cosineArr = [1 if score > thresholdP else 0 for score in cosineArr]
 
-    print(corr.to_dict)
+    print(corr.to_json)
 
     resultMetrics = {
         "f1-score": f1_score(goldSimArr, cosineArr),
         "mse": mean_squared_error(goldSimArr, cosineArr),
-        "pearson-corr": corr.abs().unstack().to_json
+        "pearson-corr": pearsonOutputF
     }
+
+    os.system(f'echo "{json.dumps(resultMetrics)}" >> {filePath}/result-metrics.json')
 
 
 dir = sys.argv[1]
