@@ -55,8 +55,6 @@ def computeEmbeddingSimilarity(filePath):
 
         corr = round(df.corr(method='pearson'), 2)
 
-        print(corr)
-
         fig, ax = plt.subplots()
         sns.heatmap(corr, annot=True, fmt='.4f', 
                     cmap=plt.get_cmap('coolwarm'), cbar=False, ax=ax)
