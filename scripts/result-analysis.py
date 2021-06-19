@@ -64,8 +64,6 @@ def computeEmbeddingSimilarity(filePath):
     goldSimArr = [1 if score > thresholdP else 0 for score in goldSimArr]
     cosineArr = [1 if score > thresholdP else 0 for score in cosineArr]
 
-    print(corr.to_json)
-
     resultMetrics = {
         "f1-score": f1_score(goldSimArr, cosineArr),
         "mse": mean_squared_error(goldSimArr, cosineArr),
