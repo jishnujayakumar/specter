@@ -7,6 +7,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 import numpy as np
+import json
 from sklearn.metrics import mean_squared_error, f1_score
 
 
@@ -68,7 +69,9 @@ def computeEmbeddingSimilarity(filePath):
         "pearson-corr": corr
     }
 
-    os.system(f'cat {resultMetrics} >> {filePath}/result-metrics.json')
+    with open("{filePath}/result-metrics.json") as resultF:
+        json.dump(resultMetrics, resultF)
+
 
 dir = sys.argv[1]
 ELECTER_DIR = os.environ['ELECTER_DIR']
