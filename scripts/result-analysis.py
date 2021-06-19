@@ -61,13 +61,18 @@ def computeEmbeddingSimilarity(filePath):
         plt.savefig(pearsonOutputF, bbox_inches='tight', pad_inches=0.0)
         df.to_csv(f"{filePath}/sim-vs-cosine-sim-result.csv", index=False)
 
-    goldSimArr = [1 if score > thresholdP else 0 for score in goldSimArr]
-    cosineArr = [1 if score > thresholdP else 0 for score in cosineArr]
+    true = [1 if score > thresholdP else 0 for score in goldSimArr]
+    pred = [1 if score > thresholdP else 0 for score in cosineArr]
 
     resultMetrics = {
-        "f1-score": f1_score(goldSimArr, cosineArr),
-        "mse": mean_squared_error(goldSimArr, cosineArr),
-        "pearson-corr": pearsonOutputF
+        "f1-score": f1_score(true, pred),
+        "mse": mean_squared_error(true, pred),
+        "pearson-corr": pearsonOutputF,
+        "thresholdP": thresholdP,
+        "goldScore": goldSimArr,
+        "cosineSimScore": cosineArr,
+        "trueLabel": true,
+        "predLabel": pred
     }
 
     os.system(f'echo "{json.dumps(resultMetrics)}" >> {filePath}/result-metrics.json')
