@@ -69,7 +69,7 @@ def computeEmbeddingSimilarity(filePath):
         "pearson-corr": corr
     }
 
-    with open("{filePath}/result-metrics.json") as resultF:
+    with open(f"{filePath}/result-metrics.json") as resultF:
         json.dump(resultMetrics, resultF)
 
 
