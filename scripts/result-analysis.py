@@ -68,9 +68,7 @@ def computeEmbeddingSimilarity(filePath):
         "mse": mean_squared_error(goldSimArr, cosineArr),
         "pearson-corr": corr
     }
-
-    with open(f"{filePath}/result-metrics.json") as resultF:
-        json.dump(resultF, resultMetrics)
+    os.system(f'echo "{json.dumps(resultMetrics)}" >> {filePath}/result-metrics.json')
 
 
 dir = sys.argv[1]
