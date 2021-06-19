@@ -31,7 +31,7 @@ def computeEmbeddingSimilarity(filePath):
     goldSimArr = []
     cosineArr = []
     corr = None
-    pearsonOutputF=f"{filePath}/pearson-correlation-gold-sim-vs-cosine-sim.png"
+    pearsonOutputF = f"{filePath}/pearson-correlation-gold-sim-vs-cosine-sim.png"
 
     with open(f"{filePath}/similarity-scores.txt", "r") as simScoreF:
         lines = simScoreF.readlines()
@@ -65,8 +65,8 @@ def computeEmbeddingSimilarity(filePath):
     pred = [1 if score > thresholdP else 0 for score in cosineArr]
 
     resultMetrics = {
-        "f1-score": f1_score(true, pred),
-        "mse": mean_squared_error(true, pred),
+        "f1-score": round(f1_score(true, pred), 2),
+        "mse": round(mean_squared_error(true, pred), 2),
         "pearson-corr": pearsonOutputF,
         "thresholdP": thresholdP,
         "goldScore": goldSimArr,
