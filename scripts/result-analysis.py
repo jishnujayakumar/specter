@@ -70,7 +70,7 @@ def computeEmbeddingSimilarity(filePath):
     }
 
     with open(f"{filePath}/result-metrics.json") as resultF:
-        json.dumps(resultF, resultMetrics)
+        json.dump(resultF, resultMetrics)
 
 
 dir = sys.argv[1]
