@@ -54,6 +54,9 @@ def computeEmbeddingSimilarity(filePath):
         df['cosineSimilarityValue'] = cosineArr
 
         corr = df.corr(method='pearson')
+
+        print(corr)
+
         fig, ax = plt.subplots()
         sns.heatmap(corr, annot=True, fmt='.4f', 
                     cmap=plt.get_cmap('coolwarm'), cbar=False, ax=ax)
