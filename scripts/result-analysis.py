@@ -42,10 +42,10 @@ def computeEmbeddingSimilarity(filePath):
             goldSimArr.append(float(line[2]))
 
             cosineArr.append(
-                cosine_similarity(
+                round(cosine_similarity(
                     result[line[0]],
                     result[line[1]]
-                )
+                ), 2)
             )
         df = pd.DataFrame()
         df['fromDocID'] = frmArr
