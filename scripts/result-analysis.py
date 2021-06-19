@@ -53,7 +53,7 @@ def computeEmbeddingSimilarity(filePath):
         df['goldSimilarityValue'] = goldSimArr
         df['cosineSimilarityValue'] = cosineArr
 
-        corr = df.corr(method='pearson')
+        corr = round(df.corr(method='pearson'), 2)
 
         print(corr)
 
