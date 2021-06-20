@@ -44,7 +44,7 @@ SUMMARYSIZEJSON = open(f"{ELECTER_DIR}/legal-data-dsdr-summarized/file-to-summar
 AVGWORDPERSENT = 17
 
 
-SUMY = FALSE # Default was True 
+SUMY = False # Default was True, for DSDR SUMY=False as suggested by Paheli
 UNSUPERVISED = True #for DSDR
 
 LANG = 'english'
