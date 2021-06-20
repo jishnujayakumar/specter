@@ -38,7 +38,7 @@ PATH = "$ELECTER_DIR/legal-data-dsdr-summarized/original-castext-without-summari
 OUTDIR = '$ELECTER_DIR/legal-data-dsdr-summarized/casetext'
 # SUMMARYSIZEJSON = open('file containing summary length in no.of words.txt',"r")
 #file containing summary length in no.of words.txt format : filename<tab>summary-len-count
-SUMMARYSIZEJSON = open("$ELECTER_DIR/legal-data-dsdr-summarized/file-to-summary-size.txt,"r")
+SUMMARYSIZEJSON = open("$ELECTER_DIR/legal-data-dsdr-summarized/file-to-summary-size.txt","r")
 
 AVGWORDPERSENT = 17
 
