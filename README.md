@@ -3,6 +3,25 @@
 ## Requirements
 - Python >= 3.6
 
+### Setup
+```bash
+# Clone the repo
+git clone https://github.com/jishnujayakumar/specter && cd "$_"
+
+# Set a new env variable called ELECTER_DIR with specter/ directory's absolute path as value
+# If using bash shell, run 
+echo 'export ELECTER_DIR=`pwd`' >> ~/.bash_profile && source ~/.bash_profile
+
+# If not permitted to edit bash_profile try: [ This has to be done everytime on opening a new shell session ] 
+export ELECTER_DIR=`pwd`
+
+# Change script permissions
+chmod -R 700 *
+
+python -m pip install -r requirements.txt
+python -m spacy download en_core_web_sm
+```
+
 ### To get legal-bert
 ```bash
 cd pre-experiment/
@@ -26,11 +45,6 @@ chmod a+x run-pipeline.sh
 ### 2. Running each step in the pipeline independently
 ### Preprocess and replace filenames from mapper.txt to similarity-scores.txt
 ```bash
-# Set git repo directory path as an environment variable 
-export ELECTER_DIR=`pwd`
-
-chmod a+x pre-experiment/preprocess-legal-data.sh
-
 # Place the following txt files in in specter/legal-data directory 
 # mapping.txt no_doc_mapping.txt  precedent-citation.txt  similarity-scores.txt
 # Output-Location: $ELECTER_DIR/legal-data/preProcessedData
