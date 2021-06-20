@@ -7,5 +7,5 @@ summaryTokenSize=$2
 rm outputF
 
 for casetextFile in `ls $dir`;do
-    cat "$casetextFile\t$summaryTokenSize" >> $outputF
+    echo "$casetextFile\t$summaryTokenSize" >> $outputF
 done
