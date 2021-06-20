@@ -19,6 +19,8 @@ export ELECTER_DIR=`pwd`
 chmod -R 700 *
 
 python -m pip install -r requirements.txt
+
+# Run the following group of commands if DSDR summarization script is run
 python -m spacy download en_core_web_sm
 python -m nltk.downloader stopwords punkt
 ```
