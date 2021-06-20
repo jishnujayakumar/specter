@@ -25,8 +25,9 @@ from OtherAlgos.freqsum import FrequencySummarizer
 from OtherAlgos.DSDR.dsdr import DSDR
 from sklearn.feature_extraction.text import TfidfVectorizer
 
-
 from split_sentences import custom_splitter
+
+import logging
 
 #PATH = '../samples/test/judgement'
 #OUTDIR = '../samples/summaries'
@@ -34,7 +35,14 @@ from split_sentences import custom_splitter
 #AVGWORDPERSENT = 27.5
 
 #DIR = 'path to doc folder'
-ELECTER_DIR=os.environ['ELECTER_DIR']
+
+ELECTER_DIR = os.environ['ELECTER_DIR']
+logging.basicConfig(
+        format='%(levelname)s:%(message)s',
+        level=logging.INFO, filename=f"{ELECTER_DIR}/legal-data-dsdr-summarized/Summ-CustomTokenizer.log"
+        )
+
+
 PATH = f"{ELECTER_DIR}/legal-data-dsdr-summarized/original-castext-without-summarization"
 OUTDIR = f"{ELECTER_DIR}/legal-data-dsdr-summarized/casetext"
 # SUMMARYSIZEJSON = open('file containing summary length in no.of words.txt',"r")
@@ -80,10 +88,11 @@ def sentCutoff(summary, size):
                 currsize += cnt
                 newsumm.append(sent)
         else:
-                print('LESS SENTS IN SUMMARY')
-                print('Words Required: %s        Words in Summary: %s'%(size, currsize))
-                
-        
+                logging.info(
+                        f"LESS SENTS IN SUMMARY: 'Words Required: {size} | \
+                            Words in Summary: {currsize}"
+                )
+
         return newsumm
 
 
@@ -145,6 +154,7 @@ if UNSUPERVISED:
         
         # freqsum
         # outpath = os.path.join(OUTDIR, "FreqSum") # commented for ease of use with specter 
+        outpath = OUTDIR
         try: os.mkdir(outpath)
         except: os.system('rm %s/*'%outpath)
         
