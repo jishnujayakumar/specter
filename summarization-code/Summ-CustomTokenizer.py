@@ -177,7 +177,7 @@ if UNSUPERVISED:
                                 for sent in summary:
                                         print(str(sent), file = fout)
                 except ValueError as err:
-                        logging.warn(
+                        logging.info(
                             f"SKIPPING FILE: {os.path.join(PATH, fn)} | Total word count: {len(document.split( ))} | errorMsg: {err}"
                         )
         
