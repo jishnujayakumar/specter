@@ -143,8 +143,8 @@ if SUMY:
                 
 if UNSUPERVISED:
         
-        #freqsum
-        outpath = os.path.join(OUTDIR, "FreqSum")
+        # freqsum
+        # outpath = os.path.join(OUTDIR, "FreqSum") # commented for ease of use with specter 
         try: os.mkdir(outpath)
         except: os.system('rm %s/*'%outpath)
         
