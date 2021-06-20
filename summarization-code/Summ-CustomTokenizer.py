@@ -77,7 +77,7 @@ def getNoSents(fn):
 
 
 
-def sentCutoff(summary, size):
+def sentCutoff(summary, size, original_text_len=None):
         newsumm = []
         currsize = 0
         for sent in summary:
@@ -88,8 +88,11 @@ def sentCutoff(summary, size):
                 currsize += cnt
                 newsumm.append(sent)
         else:
+                tempS = ""
+                if original_text_len:
+                    tempS = f" | Words in Original file: {original_text_len}"
                 logging.info(
-                        f"LESS SENTS IN SUMMARY: 'Words Required: {size} | Words in Summary: {currsize}"
+                        f"LESS SENTS IN SUMMARY: 'Words Required: {size} | Words in Summary: {currsize}{tempS}"
                 )
 
         return newsumm
@@ -161,13 +164,19 @@ if UNSUPERVISED:
         # print('\n', "FreqSum", flush = True)
         fsummr = FrequencySummarizer()
         for fn in fileslist:
+                origDocWC = countWord(document)
                 with open(os.path.join(PATH, fn)) as fp:
                         document = fp.read().replace('\n', ' ')
-                summary = fsummr.summarize(document, getNoSents(fn))
-                summary = sentCutoff(summary, SUMMARYLEN[fn])
-                with open(os.path.join(outpath, fn), 'w') as fout:
-                        for sent in summary:
-                                print(str(sent), file = fout)
+                try:
+                        summary = fsummr.summarize(document, getNoSents(fn))
+                        summary = sentCutoff(summary, SUMMARYLEN[fn], original_text_len=origDocWC)
+                        with open(os.path.join(outpath, fn), 'w') as fout:
+                                for sent in summary:
+                                        print(str(sent), file = fout)
+                except:
+                        logging.info(
+                            f"SKIPPING FILE: {os.path.join(PATH, fn)} | Total word count: {origDocWC}"
+                        )
         
         
         
