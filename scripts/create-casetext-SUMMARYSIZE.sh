@@ -5,7 +5,15 @@ outputF="$dir/file-to-summary-size.txt"
 inpDir="$dir/casetext"
 summaryTokenSize=$2
 
-rm outputF
+if [[ -f "$outputF" ]]; then
+    rm $outputF
+fi
+
+ocws="$dir/original-castext-without-summarization/"
+
+if [[ -d "$ocws" ]]; then
+    mv $ocws $inpDir/
+fi
 
 for casetextFile in `ls $inpDir`;do
     echo $casetextFile$'\t'$summaryTokenSize >> $outputF
