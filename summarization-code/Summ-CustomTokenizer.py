@@ -37,9 +37,11 @@ import logging
 #DIR = 'path to doc folder'
 
 ELECTER_DIR = os.environ['ELECTER_DIR']
+logF = f"{ELECTER_DIR}/legal-data-dsdr-summarized/Summ-CustomTokenizer.log"
+os.system(f"rm {logF}")
 logging.basicConfig(
-        format='%(levelname)s: %(message)s',
-        level=logging.INFO, filename=f"{ELECTER_DIR}/legal-data-dsdr-summarized/Summ-CustomTokenizer.log"
+        format='%(asctime)s | %(levelname)s: %(message)s',
+        level=logging.INFO, filename=logF
         )
 
 
@@ -167,16 +169,16 @@ if UNSUPERVISED:
                 origDocWC = None
                 with open(os.path.join(PATH, fn)) as fp:
                         document = fp.read().replace('\n', ' ')
-                        origDocWC = countWord(document)
                 try:
+                        origDocWC = countWord(document)
                         summary = fsummr.summarize(document, getNoSents(fn))
                         summary = sentCutoff(summary, SUMMARYLEN[fn], original_text_len=origDocWC)
                         with open(os.path.join(outpath, fn), 'w') as fout:
                                 for sent in summary:
                                         print(str(sent), file = fout)
-                except:
-                        logging.info(
-                            f"SKIPPING FILE: {os.path.join(PATH, fn)} | Total word count: {origDocWC}"
+                except ValueError as err:
+                        logging.warn(
+                            f"SKIPPING FILE: {os.path.join(PATH, fn)} | Total word count: {len(document.split( ))} | errorMsg: {err}"
                         )
         
         
