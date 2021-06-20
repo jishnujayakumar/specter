@@ -34,9 +34,10 @@ from split_sentences import custom_splitter
 #AVGWORDPERSENT = 27.5
 
 #DIR = 'path to doc folder'
-PATH = 'folder containing docs to summarize'
-OUTDIR = 'folder to store summaries'
-SUMMARYSIZEJSON = open('file containing summary length in no.of words.txt',"r")
+PATH = "$ELECTER_DIR/legal-data-dsdr-summarized/casetext-pre-summarization"
+OUTDIR = '$ELECTER_DIR/legal-data-dsdr-summarized/casetext'
+# SUMMARYSIZEJSON = open('file containing summary length in no.of words.txt',"r")
+SUMMARYSIZEJSON = open("$ELECTER_DIR/legal-data-dsdr-summarized/file-to-summary-size.txt,"r")
 #file containing summary length in no.of words.txt format : filename<tab>summary-len-count
 
 AVGWORDPERSENT = 17

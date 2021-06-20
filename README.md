@@ -65,6 +65,12 @@ python3 ./scripts/result-analysis.py legal-data
 ```
 --------------------------------------------------------------------------
 
+### Casetext summarization using [DSDR](http://www.aaai.org/ocs/index.php/AAAI/AAAI12/paper/viewPaper/4991)
+```bash
+./scripts/create-casetext-SUMMARYSIZE.sh legal-data-dsdr-summarized 512
+# e.g. ./scripts/create-casetext-SUMMARYSIZE.sh legal-data-dsdr-summarized 512
+```
+
 ![plot](https://i.ibb.co/3TC1WmG/specter-logo-cropped.png)
 
 # SPECTER: Document-level Representation Learning using Citation-informed Transformers
