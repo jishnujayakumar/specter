@@ -164,9 +164,10 @@ if UNSUPERVISED:
         # print('\n', "FreqSum", flush = True)
         fsummr = FrequencySummarizer()
         for fn in fileslist:
-                origDocWC = countWord(document)
+                origDocWC = None
                 with open(os.path.join(PATH, fn)) as fp:
                         document = fp.read().replace('\n', ' ')
+                        origDocWC = countWord(document)
                 try:
                         summary = fsummr.summarize(document, getNoSents(fn))
                         summary = sentCutoff(summary, SUMMARYLEN[fn], original_text_len=origDocWC)
