@@ -12,3 +12,4 @@ sklearn
 ijson
 Faker
 seaborn
+sumy
