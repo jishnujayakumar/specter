@@ -94,7 +94,7 @@ def sentCutoff(summary, size, original_text_len=None):
                 if original_text_len:
                     tempS = f" | Words in Original file: {original_text_len}"
                 logging.info(
-                        f"LESS SENTS IN SUMMARY: 'Words Required: {size} | Words in Summary: {currsize}{tempS}"
+                        f"LESS SENTS IN SUMMARY: Words Required: {size} | Words in Summary: {currsize}{tempS}"
                 )
 
         return newsumm
