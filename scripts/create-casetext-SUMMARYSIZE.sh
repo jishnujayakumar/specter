@@ -6,6 +6,8 @@ summaryTokenSize=$2
 
 rm outputF
 
-for casetextFile in `ls $dir`;do
+for casetextFile in `ls $dir/castext`;do
     echo "$casetextFile\t$summaryTokenSize" >> $outputF
 done
+
+mv $dir/castext $dir/original-castext-without-summarization
