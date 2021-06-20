@@ -38,7 +38,7 @@ import logging
 
 ELECTER_DIR = os.environ['ELECTER_DIR']
 logging.basicConfig(
-        format='%(levelname)s:%(message)s',
+        format='%(levelname)s: %(message)s',
         level=logging.INFO, filename=f"{ELECTER_DIR}/legal-data-dsdr-summarized/Summ-CustomTokenizer.log"
         )
 
@@ -89,8 +89,7 @@ def sentCutoff(summary, size):
                 newsumm.append(sent)
         else:
                 logging.info(
-                        f"LESS SENTS IN SUMMARY: 'Words Required: {size} | \
-                            Words in Summary: {currsize}"
+                        f"LESS SENTS IN SUMMARY: 'Words Required: {size} | Words in Summary: {currsize}"
                 )
 
         return newsumm
