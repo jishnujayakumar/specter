@@ -69,6 +69,8 @@ python3 ./scripts/result-analysis.py legal-data
 ```bash
 ./scripts/create-casetext-SUMMARYSIZE.sh legal-data-dsdr-summarized 512
 # e.g. ./scripts/create-casetext-SUMMARYSIZE.sh legal-data-dsdr-summarized 512
+
+python summarization-code/Summ-CustomTokenizer.py
 ```
 
 ![plot](https://i.ibb.co/3TC1WmG/specter-logo-cropped.png)
