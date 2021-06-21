@@ -162,11 +162,11 @@ if UNSUPERVISED:
         # freqsum
         # outpath = os.path.join(OUTDIR, "FreqSum") # commented for ease of use with specter 
         
-        # outpath = OUTDIR
+        # # outpath = OUTDIR
         # try: os.mkdir(outpath)
         # except: os.system('rm %s/*'%outpath)
 
-        # # print('\n', "FreqSum", flush = True)
+        # print('\n', "FreqSum", flush = True)
         # fsummr = FrequencySummarizer()
         # for fn in fileslist:
         #         origDocWC = None
