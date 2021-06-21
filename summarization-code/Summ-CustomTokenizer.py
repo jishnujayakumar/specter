@@ -190,17 +190,23 @@ if UNSUPERVISED:
         
         print('\n', "DSDR", flush = True)
         for fn in fileslist:
-                with open(os.path.join(PATH, fn)) as fp:
-                        document = NLP(fp.read().replace('\n', ' '))
+                docContent = fp.read().replace('\n', ' ')
+                try:
+                        with open(os.path.join(PATH, fn)) as fp:
+                                document = NLP(docContent)
+                                
+                        sentences = [s.text for s in document.sents if len(s.text.strip()) > 10]
+                        tfidf = TfidfVectorizer()
+                        normalized_matrix = tfidf.fit_transform(sentences)
                         
-                sentences = [s.text for s in document.sents if len(s.text.strip()) > 10]
-                tfidf = TfidfVectorizer()
-                normalized_matrix = tfidf.fit_transform(sentences)
-                
-                summary_idx = DSDR.lin(normalized_matrix.toarray(), 2 * getNoSents(fn), 0.1)
-                summary = [sentences[i] for i in summary_idx]
-                summary = sentCutoff(summary, SUMMARYLEN[fn])
-                with open(os.path.join(outpath, fn), 'w') as fout:
-                        for sent in summary:
-                                print(str(sent), file = fout)
+                        summary_idx = DSDR.lin(normalized_matrix.toarray(), 2 * getNoSents(fn), 0.1)
+                        summary = [sentences[i] for i in summary_idx]
+                        summary = sentCutoff(summary, SUMMARYLEN[fn])
+                        with open(os.path.join(outpath, fn), 'w') as fout:
+                                for sent in summary:
+                                        print(str(sent), file = fout)
+                except ValueError as err:
+                    logging.info(
+                            f"SKIPPING FILE: {os.path.join(PATH, fn)} | Total word count: {len(docContent.split( ))} | errorMsg: {err}"
+                        )
         
