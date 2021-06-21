@@ -159,27 +159,27 @@ if UNSUPERVISED:
         # freqsum
         # outpath = os.path.join(OUTDIR, "FreqSum") # commented for ease of use with specter 
         
-        outpath = OUTDIR
-        try: os.mkdir(outpath)
-        except: os.system('rm %s/*'%outpath)
+        # outpath = OUTDIR
+        # try: os.mkdir(outpath)
+        # except: os.system('rm %s/*'%outpath)
 
-        # print('\n', "FreqSum", flush = True)
-        fsummr = FrequencySummarizer()
-        for fn in fileslist:
-                origDocWC = None
-                with open(os.path.join(PATH, fn)) as fp:
-                        document = fp.read().replace('\n', ' ')
-                try:
-                        origDocWC = countWord(document)
-                        summary = fsummr.summarize(document, getNoSents(fn))
-                        summary = sentCutoff(summary, SUMMARYLEN[fn], original_text_len=origDocWC)
-                        with open(os.path.join(outpath, fn), 'w') as fout:
-                                for sent in summary:
-                                        print(str(sent), file = fout)
-                except ValueError as err:
-                        logging.info(
-                            f"SKIPPING FILE: {os.path.join(PATH, fn)} | Total word count: {len(document.split( ))} | errorMsg: {err}"
-                        )
+        # # print('\n', "FreqSum", flush = True)
+        # fsummr = FrequencySummarizer()
+        # for fn in fileslist:
+        #         origDocWC = None
+        #         with open(os.path.join(PATH, fn)) as fp:
+        #                 document = fp.read().replace('\n', ' ')
+        #         try:
+        #                 origDocWC = countWord(document)
+        #                 summary = fsummr.summarize(document, getNoSents(fn))
+        #                 summary = sentCutoff(summary, SUMMARYLEN[fn], original_text_len=origDocWC)
+        #                 with open(os.path.join(outpath, fn), 'w') as fout:
+        #                         for sent in summary:
+        #                                 print(str(sent), file = fout)
+        #         except ValueError as err:
+        #                 logging.info(
+        #                     f"SKIPPING FILE: {os.path.join(PATH, fn)} | Total word count: {len(document.split( ))} | errorMsg: {err}"
+        #                 )
         
         
         
@@ -206,7 +206,7 @@ if UNSUPERVISED:
                                 for sent in summary:
                                         print(str(sent), file = fout)
                 except ValueError as err:
-                    logging.info(
-                            f"SKIPPING FILE: {os.path.join(PATH, fn)} | Total word count: {len(docContent.split( ))} | errorMsg: {err}"
-                        )
+                        logging.info(
+                                f"SKIPPING FILE: {os.path.join(PATH, fn)} | Total word count: {len(docContent.split( ))} | errorMsg: {err}"
+                            )
         
