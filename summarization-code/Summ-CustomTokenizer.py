@@ -195,8 +195,8 @@ if UNSUPERVISED:
                         origDocWC=None
                         with open(os.path.join(PATH, fn)) as fp:
                                 docContent = fp.read().replace('\n', ' ')
-                                document = NLP(docContent)
                                 origDocWC = countWord(document) 
+                                document = NLP(docContent)
                         sentences = [s.text for s in document.sents if len(s.text.strip()) > 10]
                         tfidf = TfidfVectorizer()
                         normalized_matrix = tfidf.fit_transform(sentences)
