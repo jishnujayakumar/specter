@@ -190,9 +190,10 @@ if UNSUPERVISED:
         
         print('\n', "DSDR", flush = True)
         for fn in fileslist:
-                docContent = fp.read().replace('\n', ' ')
+                docContent = None
                 try:
                         with open(os.path.join(PATH, fn)) as fp:
+                                docContent = fp.read().replace('\n', ' ')
                                 document = NLP(docContent)
                                 
                         sentences = [s.text for s in document.sents if len(s.text.strip()) > 10]
