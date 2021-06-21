@@ -192,17 +192,18 @@ if UNSUPERVISED:
         for fn in fileslist:
                 docContent = None
                 try:
+                        origDocWC=None
                         with open(os.path.join(PATH, fn)) as fp:
                                 docContent = fp.read().replace('\n', ' ')
                                 document = NLP(docContent)
-                                
+                                origDocWC = countWord(document) 
                         sentences = [s.text for s in document.sents if len(s.text.strip()) > 10]
                         tfidf = TfidfVectorizer()
                         normalized_matrix = tfidf.fit_transform(sentences)
                         
                         summary_idx = DSDR.lin(normalized_matrix.toarray(), 2 * getNoSents(fn), 0.1)
                         summary = [sentences[i] for i in summary_idx]
-                        summary = sentCutoff(summary, SUMMARYLEN[fn])
+                        summary = sentCutoff(summary, SUMMARYLEN[fn], original_text_len=origDocWC)
                         with open(os.path.join(outpath, fn), 'w') as fout:
                                 for sent in summary:
                                         print(str(sent), file = fout)
