@@ -93,11 +93,11 @@ def sentCutoff(summary, size, original_text_len=None):
         for sent in summary:
                 cnt = countWord(str(sent))
                 if currsize + cnt > size:
+                        logMSG(size, currsize, original_text_len, "MORE")
                         break
                 
                 currsize += cnt
                 newsumm.append(sent)
-                logMSG(size, currsize, original_text_len, "MORE")
         else:
                 logMSG(size, currsize, original_text_len, "LESS")
         return newsumm
