@@ -78,6 +78,14 @@ def getNoSents(fn):
         return math.ceil(SUMMARYLEN[fn] / AVGWORDPERSENT)
 
 
+def logMSG(size, currSize, original_text_len, op):
+        tempS = ""
+        if original_text_len:
+            tempS = f" | Words in Original file: {original_text_len}"
+        logging.info(
+                f"{op} SENTS IN SUMMARY: Words Required: {size} | Words in Summary: {currSize}{tempS}"
+        )
+
 
 def sentCutoff(summary, size, original_text_len=None):
         newsumm = []
@@ -89,14 +97,9 @@ def sentCutoff(summary, size, original_text_len=None):
                 
                 currsize += cnt
                 newsumm.append(sent)
+                logMSG(size, currsize, original_text_len, "MORE")
         else:
-                tempS = ""
-                if original_text_len:
-                    tempS = f" | Words in Original file: {original_text_len}"
-                logging.info(
-                        f"LESS SENTS IN SUMMARY: Words Required: {size} | Words in Summary: {currsize}{tempS}"
-                )
-
+                logMSG(size, currsize, original_text_len, "LESS")
         return newsumm
 
 
@@ -209,6 +212,6 @@ if UNSUPERVISED:
                                         print(str(sent), file = fout)
                 except ValueError as err:
                         logging.info(
-                                f"SKIPPING FILE: {os.path.join(PATH, fn)} | Total word count: {len(docContent.split( ))} | errorMsg: {err}"
+                                f"SKIPPING FILE: {os.path.join(PATH, fn)} | Total word count: {origDocWC} | errorMsg: {err}"
                             )
         
