@@ -89,7 +89,7 @@ def logMSG(size, currSize, original_text_len, op):
 
 def skipLogMSG(path, document, err):
         logging.info(
-                f"SKIPPING FILE: {path} | Total word count: {len(document.split( ))} | errorMsg: {err}"
+                f"SKIPPING FILE: {path} | Total word count: {len(document.split(' '))} | errorMsg: {err}"
                 )
 
 def sentCutoff(summary, size, original_text_len=None):
@@ -172,8 +172,8 @@ if UNSUPERVISED:
         print('\n', "DSDR", flush = True)
         for fn in fileslist:
                 docContent = None
+                origDocWC=None
                 try:
-                        origDocWC=None
                         with open(os.path.join(PATH, fn)) as fp:
                                 docContent = fp.read().replace('\n', ' ')
                                 origDocWC = countWord(docContent) 
@@ -189,7 +189,7 @@ if UNSUPERVISED:
                                 for sent in summary:
                                         print(str(sent), file = fout)
                 except ValueError as err:
-                        skipLogMSG(os.path.join(PATH, fn), document, err)
+                        skipLogMSG(os.path.join(PATH, fn), docContent, err)
         
 
         # # freqsum
@@ -203,6 +203,7 @@ if UNSUPERVISED:
         # fsummr = FrequencySummarizer()
         # for fn in fileslist:
         #         origDocWC = None
+        #         document = ""
         #         with open(os.path.join(PATH, fn)) as fp:
         #                 document = fp.read().replace('\n', ' ')
         #         try:
