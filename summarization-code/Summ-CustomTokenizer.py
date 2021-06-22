@@ -37,6 +37,8 @@ import logging
 #DIR = 'path to doc folder'
 
 ELECTER_DIR = os.environ['ELECTER_DIR']
+ELECTER_HULK_DIR = os.environ['ELECTER_HULK_DIR']
+
 logF = f"{ELECTER_DIR}/legal-data-dsdr-summarized/Summ-CustomTokenizer.log"
 os.system(f"rm {logF}")
 logging.basicConfig(
@@ -46,10 +48,10 @@ logging.basicConfig(
 
 
 PATH = f"{ELECTER_DIR}/legal-data-dsdr-summarized/original-castext-without-summarization"
-OUTDIR = f"{ELECTER_DIR}/legal-data-dsdr-summarized/casetext"
+OUTDIR = f"{ELECTER_HULK_DIR}/legal-data-dsdr-summarized/casetext"
 # SUMMARYSIZEJSON = open('file containing summary length in no.of words.txt',"r")
 #file containing summary length in no.of words.txt format : filename<tab>summary-len-count
-SUMMARYSIZEJSON = open(f"{ELECTER_DIR}/legal-data-dsdr-summarized/file-to-summary-size.txt","r")
+SUMMARYSIZEJSON = open(f"{ELECTER_HULK_DIR}/legal-data-dsdr-summarized/file-to-summary-size.txt","r")
 
 AVGWORDPERSENT = 17
 
