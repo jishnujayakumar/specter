@@ -46,7 +46,7 @@ BERT_VARIANT="legal-bert-base-uncased" # for legal-bert
 BERT_VOCAB="pre-experiment/$BERT_VARIANT/vocab.txt"
 BERT_WEIGHTS="pre-experiment/$BERT_VARIANT/$BERT_VARIANT.tar.gz"
 
-VOCAB_DIR="legal-data-sample/legal-data-vocab/"
+VOCAB_DIR="legal-data-dsdr-summarized/legal-data-vocab/"
 INCLUDE_VENUE="false"
 
 # --------------
