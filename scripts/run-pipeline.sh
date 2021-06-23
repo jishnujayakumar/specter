@@ -34,7 +34,8 @@ rm -rf $model_out_dir && $ELECTER_DIR/scripts/run-exp-simple.sh -c $ELECTER_DIR/
 -s $model_out_dir --num-epochs 100 --batch-size 32 \
 --train-path $EXPERIMENT_DATA_DIR/data-train.p \
 --dev-path $EXPERIMENT_DATA_DIR/data-val.p \
---num-train-instances $NUM_TRAIN_INSTANCES --cuda-device -1 --max-seq-len $MAX_SEQ_LENGTH 
+--num-train-instances $NUM_TRAIN_INSTANCES --cuda-device -1 --max-seq-len $MAX_SEQ_LENGTH \
+--vocab $LEGAL_DATA_DIR/legal-data-vocab/
 
 # Move model artifacts to appropriate tar.gz file
 cd $model_out_dir
