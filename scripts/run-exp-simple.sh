@@ -43,10 +43,10 @@ DEV_PATH="data/training-data/val.pkl"
 
 BERT_MODEL="bert-pretrained"
 BERT_VARIANT="legal-bert-base-uncased" # for legal-bert
-BERT_VOCAB="pre-experiment/$BERT_VARIANT/vocab.txt"
-BERT_WEIGHTS="pre-experiment/$BERT_VARIANT/$BERT_VARIANT.tar.gz"
+BERT_VOCAB="$ELELCTER_DIR/pre-experiment/$BERT_VARIANT/vocab.txt"
+BERT_WEIGHTS="$ELELCTER_DIR/pre-experiment/$BERT_VARIANT/$BERT_VARIANT.tar.gz"
 
-VOCAB_DIR="legal-data-dsdr-summarized/legal-data-vocab/"
+VOCAB_DIR="$LEGAL_DATA_DIR/legal-data-vocab/"
 INCLUDE_VENUE="false"
 
 # --------------

@@ -12,24 +12,28 @@ cd $ELECTER_DIR
 # Preprocess Data
 ./pre-experiment/preprocess-legal-data.sh $LEGAL_DATA_DIR $2 $3
 
+# export EXPERIMENT_DATA_DIR="$LEGAL_DATA_DIR/preProcessedData/experimentData"
+export EXPERIMENT_DATA_DIR="$ELECTER_HULK_DIR/legal-data-dsdr-summarized/preProcessed/experimentData"
+
+
 # Create triplets files
 python $ELECTER_DIR/specter/data_utils/create_training_files.py \
 --data-dir $LEGAL_DATA_DIR/preProcessedData \
 --metadata $LEGAL_DATA_DIR/preProcessedData/metadata.json \
---outdir $LEGAL_DATA_DIR/preProcessedData/experimentData \
+--outdir $EXPERIMENT_DATA_DIR\
 --bert_vocab $ELECTER_DIR/pre-experiment/legal-bert-base-uncased/vocab.txt \
 --included-text-fields title \
 --ratio_hard_negatives 0.4
 
-NUM_TRAIN_INSTANCES=`grep 'train' $LEGAL_DATA_DIR/preProcessedData/experimentData/data-metrics.json | sed -r 's/^[^:]*:(.*)$/\1/' | sed 's/ //g' | sed 's/,//g'`
+NUM_TRAIN_INSTANCES=`grep 'train' $EXPERIMENT_DATA_DIR/data-metrics.json | sed -r 's/^[^:]*:(.*)$/\1/' | sed 's/ //g' | sed 's/,//g'`
 
-model_out_dir="$ELECTER_HULK_DIR/legal-data-dsdr-summarized/model-output-$2-$3-$MAX_SEQ_LENGTH"
+model_out_dir="$EXPERIMENT_DATA_DIR/model-output-$2-$3-$MAX_SEQ_LENGTH"
 
 # Perform training
 rm -rf $model_out_dir && $ELECTER_DIR/scripts/run-exp-simple.sh -c $ELECTER_DIR/experiment_configs/simple.jsonnet \
 -s $model_out_dir --num-epochs 100 --batch-size 32 \
---train-path $ELECTER_HULK_DIR/preProcessedData/experimentData/data-train.p \
---dev-path $ELECTER_HULK_DIR/preProcessedData/experimentData/data-val.p \
+--train-path $EXPERIMENT_DATA_DIR/data-train.p \
+--dev-path $EXPERIMENT_DATA_DIR/data-val.p \
 --num-train-instances $NUM_TRAIN_INSTANCES --cuda-device -1 --max-seq-len $MAX_SEQ_LENGTH 
 
 # Move model artifacts to appropriate tar.gz file
