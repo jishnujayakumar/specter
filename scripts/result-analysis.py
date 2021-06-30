@@ -36,8 +36,8 @@ def computeEmbeddingSimilarity(filePath):
     with open(f"{filePath}/similarity-scores.txt", "r") as simScoreF:
         lines = simScoreF.readlines()
         for line in tqdm(lines):
+            line = list(filter(None, line.strip().split("\t")))
             if result[line[0]].shape == result[line[1]].shape:
-                line = list(filter(None, line.strip().split("\t")))
                 frmArr.append(line[0])
                 toArr.append(line[1])
                 goldSimArr.append(float(line[2]))
