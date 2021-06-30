@@ -37,11 +37,10 @@ def computeEmbeddingSimilarity(filePath):
         lines = simScoreF.readlines()
         for line in tqdm(lines):
             line = list(filter(None, line.strip().split("\t")))
-            frmArr.append(line[0])
-            toArr.append(line[1])
-            goldSimArr.append(float(line[2]))
-
             try:
+                frmArr.append(line[0])
+                toArr.append(line[1])
+                goldSimArr.append(float(line[2]))
                 cosineArr.append(
                     round(cosine_similarity(
                         result[line[0]],
