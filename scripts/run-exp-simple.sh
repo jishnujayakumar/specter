@@ -42,7 +42,8 @@ TRAIN_PATH="data/training-data/train.pkl"
 DEV_PATH="data/training-data/val.pkl"
 
 BERT_MODEL="bert-pretrained"
-BERT_VARIANT="legal-bert-base-uncased" # for legal-bert
+# BERT_VARIANT="legal-bert-base-uncased" # for legal-bert
+BERT_VARIANT="custom-legalbert" # for legal-bert
 BERT_VOCAB="$ELECTER_DIR/pre-experiment/$BERT_VARIANT/vocab.txt"
 BERT_WEIGHTS="$ELECTER_DIR/pre-experiment/$BERT_VARIANT/$BERT_VARIANT.tar.gz"
 

@@ -32,10 +32,10 @@ model_out_dir="$EXPERIMENT_DATA_DIR/model-output-$2-$3-$MAX_SEQ_LENGTH"
 
 # Perform training
 rm -rf $model_out_dir && $ELECTER_DIR/scripts/run-exp-simple.sh -c $ELECTER_DIR/experiment_configs/simple.jsonnet \
--s $model_out_dir --num-epochs 100 --batch-size 32 \
+-s $model_out_dir --num-epochs 100 --batch-size 16 \
 --train-path $EXPERIMENT_DATA_DIR/data-train.p \
 --dev-path $EXPERIMENT_DATA_DIR/data-val.p \
---num-train-instances $NUM_TRAIN_INSTANCES --cuda-device -1 --max-seq-len $MAX_SEQ_LENGTH \
+--num-train-instances $NUM_TRAIN_INSTANCES --cuda-device 0 --max-seq-len $MAX_SEQ_LENGTH \
 --vocab $LEGAL_DATA_DIR/legal-data-vocab/
 
 # Move model artifacts to appropriate tar.gz file
