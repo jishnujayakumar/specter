@@ -49,7 +49,7 @@ def computeEmbeddingSimilarity(filePath):
                     ), 2)
                 )
             except:
-                continue
+                pass
         df = pd.DataFrame()
         df['fromDocID'] = frmArr
         df['toDocID'] = toArr
