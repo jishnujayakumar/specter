@@ -41,12 +41,15 @@ def computeEmbeddingSimilarity(filePath):
             toArr.append(line[1])
             goldSimArr.append(float(line[2]))
 
-            cosineArr.append(
-                round(cosine_similarity(
-                    result[line[0]],
-                    result[line[1]]
-                ), 2)
-            )
+            try:
+                cosineArr.append(
+                    round(cosine_similarity(
+                        result[line[0]],
+                        result[line[1]]
+                    ), 2)
+                )
+            except:
+                continue
         df = pd.DataFrame()
         df['fromDocID'] = frmArr
         df['toDocID'] = toArr

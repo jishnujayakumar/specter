@@ -13,7 +13,7 @@ cd $ELECTER_DIR
 ./pre-experiment/preprocess-legal-data.sh $LEGAL_DATA_DIR $2 $3
 
 # export EXPERIMENT_DATA_DIR="$LEGAL_DATA_DIR/preProcessedData/experimentData"
-export EXPERIMENT_DATA_DIR="$ELECTER_HULK_DIR/legal-data-dsdr-summarized/preProcessedData/experimentData"
+export EXPERIMENT_DATA_DIR="$ELECTER_HULK_DIR/legal-data-dsdr-summarized/preProcessedData/experimentData-custom-legal-bert"
 
 
 # Create triplets files
@@ -21,7 +21,8 @@ python $ELECTER_DIR/specter/data_utils/create_training_files.py \
 --data-dir $LEGAL_DATA_DIR/preProcessedData \
 --metadata $LEGAL_DATA_DIR/preProcessedData/metadata.json \
 --outdir $EXPERIMENT_DATA_DIR\
---bert_vocab $ELECTER_DIR/pre-experiment/legal-bert-base-uncased/vocab.txt \
+# --bert_vocab $ELECTER_DIR/pre-experiment/legal-bert-base-uncased/vocab.txt \
+--bert_vocab $ELECTER_DIR/pre-experiment/custom-legalbert/vocab.txt \
 --included-text-fields title \
 --ratio_hard_negatives 0.4
 
@@ -52,7 +53,7 @@ python $ELECTER_DIR/scripts/embed.py \
 --ids $LEGAL_DATA_DIR/Gold-Score-Docs/gold-docs.txt \
 --model $model_out_dir/model.tar.gz \
 --metadata $LEGAL_DATA_DIR/Gold-Score-Docs/metadata.json \
---cuda-device -1 \
+--cuda-device 0 \
 --batch-size 32 \
 --output-file $LEGAL_DATA_DIR/embeddings-output-gold-docs.jsonl \
 --vocab-dir $LEGAL_DATA_DIR/legal-data-vocab/ \
