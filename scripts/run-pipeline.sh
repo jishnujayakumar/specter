@@ -10,7 +10,7 @@ python get-legal-bert.py
 cd $ELECTER_DIR
 
 # Preprocess Data
-./pre-experiment/preprocess-legal-data.sh $LEGAL_DATA_DIR $2 $3
+./pre-experiment/preprocess-legal-data.sh $LEGAL_DATA_DIR 0.9 1
 
 # export EXPERIMENT_DATA_DIR="$LEGAL_DATA_DIR/preProcessedData/experimentData"
 export EXPERIMENT_DATA_DIR="$ELECTER_HULK_DIR/legal-data-dsdr-summarized/preProcessedData/experimentData-correct-custom-legal-bert"
@@ -28,7 +28,7 @@ python $ELECTER_DIR/specter/data_utils/create_training_files.py \
 
 NUM_TRAIN_INSTANCES=`grep 'train' $EXPERIMENT_DATA_DIR/data-metrics.json | sed -r 's/^[^:]*:(.*)$/\1/' | sed 's/ //g' | sed 's/,//g'`
 
-model_out_dir="$EXPERIMENT_DATA_DIR/model-output-$2-$3-$MAX_SEQ_LENGTH"
+model_out_dir="$EXPERIMENT_DATA_DIR/model-output-$MAX_SEQ_LENGTH"
 
 # Perform training
 rm -rf $model_out_dir && $ELECTER_DIR/scripts/run-exp-simple.sh -c $ELECTER_DIR/experiment_configs/simple.jsonnet \

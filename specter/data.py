@@ -67,7 +67,11 @@ class DataReaderFromPickled(DatasetReader):
             unpickler = pickle.Unpickler(f_in)
             while True:
                 try:
-                    instance = unpickler.load()
+                    instance = None
+                    try:
+                        instance = unpickler.load()
+                    except TypeError:
+                        continue
                     # compatibility with old models:
                     # for field in instance.fields:
                     #     if hasattr(instance.fields[field], '_token_indexers') and 'bert' in instance.fields[field]._token_indexers:
