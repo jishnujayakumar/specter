@@ -13,18 +13,18 @@ cd $ELECTER_DIR
 ./pre-experiment/preprocess-legal-data.sh $LEGAL_DATA_DIR $2 $3
 
 # export EXPERIMENT_DATA_DIR="$LEGAL_DATA_DIR/preProcessedData/experimentData"
-export EXPERIMENT_DATA_DIR="$ELECTER_HULK_DIR/legal-data-dsdr-summarized/preProcessedData/experimentData-custom-legal-bert"
+export EXPERIMENT_DATA_DIR="$ELECTER_HULK_DIR/legal-data-dsdr-summarized/preProcessedData/experimentData-correct-custom-legal-bert"
 
 
 # Create triplets files
 python $ELECTER_DIR/specter/data_utils/create_training_files.py \
 --data-dir $LEGAL_DATA_DIR/preProcessedData \
 --metadata $LEGAL_DATA_DIR/preProcessedData/metadata.json \
---outdir $EXPERIMENT_DATA_DIR\
-# --bert_vocab $ELECTER_DIR/pre-experiment/legal-bert-base-uncased/vocab.txt \
+--outdir $EXPERIMENT_DATA_DIR\ 
 --bert_vocab $ELECTER_DIR/pre-experiment/custom-legalbert/vocab.txt \
 --included-text-fields title \
 --ratio_hard_negatives 0.4
+# --bert_vocab $ELECTER_DIR/pre-experiment/legal-bert-base-uncased/vocab.txt \
 
 NUM_TRAIN_INSTANCES=`grep 'train' $EXPERIMENT_DATA_DIR/data-metrics.json | sed -r 's/^[^:]*:(.*)$/\1/' | sed 's/ //g' | sed 's/,//g'`
 
