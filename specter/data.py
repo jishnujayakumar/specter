@@ -65,14 +65,10 @@ class DataReaderFromPickled(DatasetReader):
         """
         with open(file_path, 'rb') as f_in:
             unpickler = pickle.Unpickler(f_in)
+            print(f"f_in: {f_in}")
             while True:
                 try:
-                    instance = None
-                    try:
-                        instance = unpickler.load()
-                    except TypeError:
-                        print(f"f_in: {TypeError}")
-                        continue
+                    instance = unpickler.load()
                     # compatibility with old models:
                     # for field in instance.fields:
                     #     if hasattr(instance.fields[field], '_token_indexers') and 'bert' in instance.fields[field]._token_indexers:
