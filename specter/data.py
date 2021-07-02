@@ -71,6 +71,7 @@ class DataReaderFromPickled(DatasetReader):
                     try:
                         instance = unpickler.load()
                     except TypeError:
+                        print(f"f_in: {TypeError}")
                         continue
                     # compatibility with old models:
                     # for field in instance.fields:
