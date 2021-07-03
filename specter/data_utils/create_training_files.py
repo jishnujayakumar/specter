@@ -496,7 +496,7 @@ if __name__ == '__main__':
     ap.add_argument('--njobs', help='number of parallel jobs for instance conversion', default=1, type=int)
     ap.add_argument('--njobs_raw', help='number of parallel jobs for triplet generation', default=12, type=int)
     ap.add_argument('--ratio_hard_negatives', default=0.3, type=float)
-    ap.add_argument('--samples_per_query', default=5, type=int)
+    ap.add_argument('--samples_per_query', default=10, type=int)
     ap.add_argument('--margin_fraction', default=0.5, type=float)
     ap.add_argument('--comment', default='', type=str)
     ap.add_argument('--data_files', help='space delimted list of data files to override default', default=None)
