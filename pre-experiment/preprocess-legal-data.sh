@@ -19,10 +19,14 @@ sed -i 's/no_doc_7/2013_K_16/g' $directory/precedent-citation.txt
 echo "Replacement Done."
 
 echo "Preprocessing..."
-if [ "$3" ]; then
-  python3 ./pre-experiment/preprocess.py --dir $directory --trainDataPercent $td --samplePercent $sp
-else
-  python3 ./pre-experiment/preprocess.py --dir $directory --trainDataPercent $td --samplePercent 1
-fi
+# if [ "$3" ]; then
+#   python3 ./pre-experiment/preprocess.py --dir $directory --trainDataPercent $td --samplePercent $sp
+# else
+#   python3 ./pre-experiment/preprocess.py --dir $directory --trainDataPercent $td --samplePercent 1
+# fi
+
+
+python3 ./pre-experiment/preprocess.py --dir $directory --trainDataPercent $td --samplePercent $sp
+
 
 echo "Preprocessing Done."

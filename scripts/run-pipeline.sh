@@ -32,7 +32,7 @@ model_out_dir="$EXPERIMENT_DATA_DIR/model-output-$MAX_SEQ_LENGTH"
 
 # Perform training
 rm -rf $model_out_dir && $ELECTER_DIR/scripts/run-exp-simple.sh -c $ELECTER_DIR/experiment_configs/simple.jsonnet \
--s $model_out_dir --num-epochs 100 --batch-size 16 \
+-s $model_out_dir --num-epochs 100 --batch-size 4 \
 --train-path $EXPERIMENT_DATA_DIR/data-train.p \
 --dev-path $EXPERIMENT_DATA_DIR/data-val.p \
 --num-train-instances $NUM_TRAIN_INSTANCES --cuda-device 0 --max-seq-len $MAX_SEQ_LENGTH \
