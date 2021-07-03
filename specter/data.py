@@ -65,7 +65,7 @@ class DataReaderFromPickled(DatasetReader):
         """
         with open(file_path, 'rb') as f_in:
             unpickler = pickle.Unpickler(f_in)
-            print(f"f_in: {f_in}")
+            # print(f"f_in: {f_in}")
             while True:
                 try:
                     instance = unpickler.load()
@@ -105,7 +105,7 @@ class DataReaderFromPickled(DatasetReader):
                                     instance.fields[field].tokens = instance.fields[field].tokens[:self.max_sequence_length]
                                 if field_type == 'abstract' and self._concat_title_abstract:
                                     instance.fields.pop(field, None)
-                    print(f"instance: {instance['source_paper_id'].metadata} | instance: {instance['pos_paper_id'].metadata} | instance: {instance['neg_paper_id'].metadata}")
+                    # print(f"instance: {instance['source_paper_id'].metadata} | instance: {instance['pos_paper_id'].metadata} | instance: {instance['neg_paper_id'].metadata}")
                     yield instance
                 except EOFError:
                     break
