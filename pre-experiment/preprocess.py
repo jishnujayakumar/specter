@@ -167,7 +167,10 @@ for docID in tqdm(docs):
     In lieu of it right now all content is taken as input, i.e. body
     """
 
-    body = casetext
+    words = nltk.word_tokenize(casetext)
+    new_words = [word for word in words if word.isalnum()]
+    body = " ".join(new_words)
+
     metadata[docID] = {
         "paper_id": docID,
         "title": body,

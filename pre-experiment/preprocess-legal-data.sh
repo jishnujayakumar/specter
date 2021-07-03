@@ -1,4 +1,8 @@
 directory=$1
+# td=$2
+# sp=$3
+ts=0.9
+sp=1
 
 echo "Replacement..."
 sed -i 's/\ \ =\ \ / : /g' $directory/mapping.txt 
@@ -16,9 +20,9 @@ echo "Replacement Done."
 
 echo "Preprocessing..."
 if [ "$3" ]; then
-  python3 ./pre-experiment/preprocess.py --dir $1 --trainDataPercent $2 --samplePercent $3
+  python3 ./pre-experiment/preprocess.py --dir $directory --trainDataPercent $td --samplePercent $sp
 else
-  python3 ./pre-experiment/preprocess.py --dir $1 --trainDataPercent $2 --samplePercent 1
+  python3 ./pre-experiment/preprocess.py --dir $directory --trainDataPercent $td --samplePercent 1
 fi
 
 echo "Preprocessing Done."
