@@ -1,7 +1,7 @@
 directory=$1
 # td=$2
 # sp=$3
-ts=0.9
+td=0.9
 sp=1
 
 echo "Replacement..."
