@@ -110,7 +110,7 @@ class DataReaderFromPickled(DatasetReader):
                 except EOFError:
                     break
                 except TypeError:
-                    continue
+                    break
 
 
 
