@@ -109,8 +109,6 @@ class DataReaderFromPickled(DatasetReader):
                     yield instance
                 except EOFError:
                     break
-                except TypeError:
-                    break
 
 
 

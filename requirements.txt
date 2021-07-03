@@ -6,6 +6,7 @@
 
 # Following is needed to run allennlp-run module fruitfully
 overrides==3.1.0
+nltk
 transformers
 spacy
 tqdm

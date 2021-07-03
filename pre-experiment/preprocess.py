@@ -5,6 +5,7 @@ import json
 from helpers import *
 from collections import defaultdict
 import logging
+import nltk
 
 logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.INFO)
 
@@ -63,10 +64,15 @@ goldDocFiles = " ".join([
 os.system(f"mv {goldDocFiles} {goldScoreDir}/")
 
 metadata = {}
+nltk.download("punkt")
 for goldScoreDocID in goldScoreDocIDs:
     filePath = f"{goldScoreDir}/{goldScoreDocID}.txt"
     casetext = getCaseTextContent(filePath).lower()
-    body = casetext
+
+    words = nltk.word_tokenize(casetext)
+    new_words = [word for word in words if word.isalnum()]
+    body = " ".join(new_words)
+
     metadata[goldScoreDocID] = {
         "paper_id": goldScoreDocID,
         "title": body,
