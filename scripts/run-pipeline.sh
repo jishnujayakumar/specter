@@ -4,9 +4,9 @@ export LEGAL_DATA_DIR=$1
 export MAX_SEQ_LENGTH=512
 export BERT_VARIANT=$4
 export SPQ=$5
-export OUT_F="$BERT_VARIANT-SPQ-$SPQ"
-# export EXPERIMENT_DATA_DIR="$LEGAL_DATA_DIR/preProcessedData/experimentData"
-export EXPERIMENT_DATA_DIR="$LEGAL_DATA_DIR/preProcessedData/experimentData-$OUT_F"
+export MARGIN_FRACTION=0.9
+export OUT_FILE="$BERT_VARIANT-SPQ-$SPQ-MF-$MARGIN_FRACTION"
+export EXPERIMENT_DATA_DIR="$LEGAL_DATA_DIR/preProcessedData/experimentData-$OUT_FILE"
 
 # Get legal-bert
 cd $ELECTER_DIR/pre-experiment/
@@ -24,21 +24,24 @@ python $ELECTER_DIR/specter/data_utils/create_training_files.py \
 --metadata $LEGAL_DATA_DIR/preProcessedData/metadata.json \
 --outdir $EXPERIMENT_DATA_DIR \
 --included-text-fields title \
---ratio_hard_negatives 0.4 \
+--ratio_hard_negatives 0.5 \
 --samples_per_query $SPQ \
+--margin_fraction $MARGIN_FRACTION \
 --bert_vocab $ELECTER_DIR/pre-experiment/custom-legalbert/vocab.txt
 # --bert_vocab $ELECTER_DIR/pre-experiment/legal-bert-base-uncased/vocab.txt
 
 NUM_TRAIN_INSTANCES=`grep 'train' $EXPERIMENT_DATA_DIR/data-metrics.json | sed -r 's/^[^:]*:(.*)$/\1/' | sed 's/ //g' | sed 's/,//g'`
 
-model_out_dir="$ELECTER_DIR/$LEGAL_DATA_DIR/model-output-$OUT_F"
+model_out_dir="$ELECTER_HULK_DIR/$LEGAL_DATA_DIR/model-output-$OUT_FILE"
 
 # Perform training
-rm -rf $model_out_dir && $ELECTER_DIR/scripts/run-exp-simple.sh -c $ELECTER_DIR/experiment_configs/simple.jsonnet \
--s $model_out_dir --num-epochs 100 --batch-size 1 \
+rm -rf $model_out_dir && $ELECTER_DIR/scripts/run-exp-simple.sh \
+-c $ELECTER_DIR/experiment_configs/simple.jsonnet \
+-s $model_out_dir --num-epochs 100 --batch-size 4 \
 --train-path $EXPERIMENT_DATA_DIR/data-train.p \
 --dev-path $EXPERIMENT_DATA_DIR/data-val.p \
---num-train-instances $NUM_TRAIN_INSTANCES --cuda-device 0 --max-seq-len $MAX_SEQ_LENGTH \
+--num-train-instances $NUM_TRAIN_INSTANCES \
+--cuda-device 0 --max-seq-len $MAX_SEQ_LENGTH \
 --vocab $LEGAL_DATA_DIR/legal-data-vocab/
 
 # Move model artifacts to appropriate tar.gz file

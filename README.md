@@ -41,7 +41,12 @@ chmod a+x run-pipeline.sh
 # <train-percentage>: percentage of casetex files to be considered as training data
 # <sample-percentage>: percentage of casetex files that would act as the entire dataset 
 # useful for quick experimentation
-./scripts/run-pipeline.sh <legal-data-dir> <train-percentage> <sample-percentage> <BERT_VARIANT> <SAMPLES_PER_QUERY>
+./scripts/run-pipeline.sh \
+<legal-data-dir> \
+<train-percentage> \
+<sample-percentage> \
+<BERT_VARIANT> \
+<SAMPLES_PER_QUERY>
 # E.g. ./scripts/run-pipeline.sh legal-data .9 1 8192 legal-bert-base-uncased 10
 ```
 
