@@ -31,7 +31,7 @@ python $ELECTER_DIR/specter/data_utils/create_training_files.py \
 
 NUM_TRAIN_INSTANCES=`grep 'train' $EXPERIMENT_DATA_DIR/data-metrics.json | sed -r 's/^[^:]*:(.*)$/\1/' | sed 's/ //g' | sed 's/,//g'`
 
-model_out_dir="$ELECTER_HULK_DIR/$LEGAL_DATA_DIR/model-output-$OUT_F"
+model_out_dir="$ELECTER_DIR/$LEGAL_DATA_DIR/model-output-$OUT_F"
 
 # Perform training
 rm -rf $model_out_dir && $ELECTER_DIR/scripts/run-exp-simple.sh -c $ELECTER_DIR/experiment_configs/simple.jsonnet \
