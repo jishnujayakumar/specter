@@ -3,6 +3,10 @@ chmod a+x pre-experiment/preprocess-legal-data.sh
 export LEGAL_DATA_DIR=$1
 export MAX_SEQ_LENGTH=$4
 export BERT_VARIANT=$5
+export SPQ=$6
+
+# export EXPERIMENT_DATA_DIR="$LEGAL_DATA_DIR/preProcessedData/experimentData"
+export EXPERIMENT_DATA_DIR="$LEGAL_DATA_DIR/preProcessedData/experimentData-$BERT_VARIANT-$SPQ"
 
 # Get legal-bert
 cd $ELECTER_DIR/pre-experiment/
@@ -13,10 +17,6 @@ cd $ELECTER_DIR
 # Preprocess Data
 ./pre-experiment/preprocess-legal-data.sh $LEGAL_DATA_DIR 0.9 1 true
 
-# export EXPERIMENT_DATA_DIR="$LEGAL_DATA_DIR/preProcessedData/experimentData"
-# export EXPERIMENT_DATA_DIR="$ELECTER_HULK_DIR/legal-data-dsdr-summarized/preProcessedData/experimentData-correct-custom-legal-bert"
-export EXPERIMENT_DATA_DIR="$LEGAL_DATA_DIR/preProcessedData/experimentData-NLPAUEB-LEGAL-BERT"
-
 # Create triplets files
 python $ELECTER_DIR/specter/data_utils/create_training_files.py \
 --data-dir $LEGAL_DATA_DIR/preProcessedData \
@@ -24,12 +24,13 @@ python $ELECTER_DIR/specter/data_utils/create_training_files.py \
 --outdir $EXPERIMENT_DATA_DIR \
 --included-text-fields title \
 --ratio_hard_negatives 0.4 \
+--samples_per_query $SPQ \
 --bert_vocab $ELECTER_DIR/pre-experiment/custom-legalbert/vocab.txt
 # --bert_vocab $ELECTER_DIR/pre-experiment/legal-bert-base-uncased/vocab.txt
 
 NUM_TRAIN_INSTANCES=`grep 'train' $EXPERIMENT_DATA_DIR/data-metrics.json | sed -r 's/^[^:]*:(.*)$/\1/' | sed 's/ //g' | sed 's/,//g'`
 
-model_out_dir="$ELECTER_HUL_DIR/$LEGAL_DATA_DIR/model-<code>-output-$MAX_SEQ_LENGTH"
+model_out_dir="$ELECTER_HULK_DIR/$LEGAL_DATA_DIR/model-<code>-output-$MAX_SEQ_LENGTH"
 
 # Perform training
 rm -rf $model_out_dir && $ELECTER_DIR/scripts/run-exp-simple.sh -c $ELECTER_DIR/experiment_configs/simple.jsonnet \
