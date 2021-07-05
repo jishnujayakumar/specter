@@ -11,7 +11,7 @@ python get-legal-bert.py
 cd $ELECTER_DIR
 
 # Preprocess Data
-./pre-experiment/preprocess-legal-data.sh $LEGAL_DATA_DIR 0.9 1
+./pre-experiment/preprocess-legal-data.sh $LEGAL_DATA_DIR 0.9 1 true
 
 # export EXPERIMENT_DATA_DIR="$LEGAL_DATA_DIR/preProcessedData/experimentData"
 # export EXPERIMENT_DATA_DIR="$ELECTER_HULK_DIR/legal-data-dsdr-summarized/preProcessedData/experimentData-correct-custom-legal-bert"
@@ -45,7 +45,7 @@ mv best.th weights.th
 mkdir -p model
 mv weights.th config.json model/
 mv vocabulary/ model/vocabulary/
-tar czC model . --transform='s,^\./,,' >| model.tar.gz
+tar cvzC model . --transform='s,^\./,,' >| model.tar.gz
 
 # Run inference on gold-docs
 cd $ELECTER_DIR

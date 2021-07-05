@@ -10,7 +10,7 @@ import nltk
 logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.INFO)
 
 parser = argparse.ArgumentParser(description='Preprocess legal-dataset \
-    [Courtesy: IIT-KGP]')
+    [Courtesy: CNeRG, IIT-KGP]')
 
 parser.add_argument('--dir', type=str, default="legal-data",
                     help='legal dataset directory relative path \
@@ -21,11 +21,14 @@ parser.add_argument('--trainDataPercent', type=float, default=0.8,
 parser.add_argument('--samplePercent', type=float, default=1,
                     help='Percentage (scale is 1 in lieu pf 100) \
                         of total data to be as dataset')
+parser.add_argument('--removePunctuation', type=float, default=True,
+                    help='for keeping/removing punctuation marks in dataset')
 args = parser.parse_args()
 
 mappingData = None
 dir = args.dir
 trainP = args.trainDataPercent
+removePunkt = args.removePunctuation
 valP = 1-trainP
 testP = 0
 ELECTER_DIR = os.environ['ELECTER_DIR']
@@ -69,9 +72,12 @@ for goldScoreDocID in goldScoreDocIDs:
     filePath = f"{goldScoreDir}/{goldScoreDocID}.txt"
     casetext = getCaseTextContent(filePath).lower()
 
-    words = nltk.word_tokenize(casetext)
-    new_words = [word for word in words if word.isalnum()]
-    body = " ".join(new_words)
+    if removePunkt:
+        words = nltk.word_tokenize(casetext)
+        new_words = [word for word in words if word.isalnum()]
+        body = " ".join(new_words)
+    else:
+        body = casetext
 
     metadata[goldScoreDocID] = {
         "paper_id": goldScoreDocID,
@@ -167,9 +173,12 @@ for docID in tqdm(docs):
     In lieu of it right now all content is taken as input, i.e. body
     """
 
-    words = nltk.word_tokenize(casetext)
-    new_words = [word for word in words if word.isalnum()]
-    body = " ".join(new_words)
+    if removePunkt:
+        words = nltk.word_tokenize(casetext)
+        new_words = [word for word in words if word.isalnum()]
+        body = " ".join(new_words)
+    else:
+        body = casetext
 
     metadata[docID] = {
         "paper_id": docID,

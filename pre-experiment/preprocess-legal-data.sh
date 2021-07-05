@@ -3,6 +3,7 @@ directory=$1
 # sp=$3
 td=0.9
 sp=1
+rmPunkt=1
 
 echo "Replacement..."
 sed -i 's/\ \ =\ \ / : /g' $directory/mapping.txt 
@@ -26,7 +27,7 @@ echo "Preprocessing..."
 # fi
 
 
-python3 ./pre-experiment/preprocess.py --dir $directory --trainDataPercent $td --samplePercent $sp
+python3 ./pre-experiment/preprocess.py --dir $directory --trainDataPercent $td --samplePercent $sp --removePunctuation rmPunkt
 
 
 echo "Preprocessing Done."
