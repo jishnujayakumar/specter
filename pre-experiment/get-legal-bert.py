@@ -49,5 +49,9 @@ def prepareLegalBertArtifacts(model):
 
 
 if __name__ == "__main__":
-    for model in ["zlucia/custom-legalbert"]:
+    for model in [
+        "zlucia/custom-legalbert",
+        "nlpaueb/legal-bert-base-uncased",
+        "nlpaueb/legal-bert-base-uncased"
+    ]:
         prepareLegalBertArtifacts(model)
