@@ -42,7 +42,7 @@ rm -rf $model_out_dir && $ELECTER_DIR/scripts/run-exp-simple.sh \
 --dev-path $EXPERIMENT_DATA_DIR/data-val.p \
 --num-train-instances $NUM_TRAIN_INSTANCES \
 --cuda-device 0 --max-seq-len $MAX_SEQ_LENGTH \
---vocab $LEGAL_DATA_DIR/legal-data-vocab/
+--vocab $LEGAL_DATA_DIR/legal-data-vocab
 
 # Move model artifacts to appropriate tar.gz file
 cd $model_out_dir
