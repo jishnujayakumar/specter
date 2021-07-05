@@ -1,12 +1,12 @@
+# Setup necessary environment vars 
 export ELECTER_DIR=`pwd`
-chmod a+x pre-experiment/preprocess-legal-data.sh
 export LEGAL_DATA_DIR=$1
-export MAX_SEQ_LENGTH=$4
-export BERT_VARIANT=$5
-export SPQ=$6
-
+export MAX_SEQ_LENGTH=512
+export BERT_VARIANT=$4
+export SPQ=$5
+export OUT_F="$BERT_VARIANT-SPQ-$SPQ"
 # export EXPERIMENT_DATA_DIR="$LEGAL_DATA_DIR/preProcessedData/experimentData"
-export EXPERIMENT_DATA_DIR="$LEGAL_DATA_DIR/preProcessedData/experimentData-$BERT_VARIANT-$SPQ"
+export EXPERIMENT_DATA_DIR="$LEGAL_DATA_DIR/preProcessedData/experimentData-$OUT_F"
 
 # Get legal-bert
 cd $ELECTER_DIR/pre-experiment/
@@ -14,7 +14,8 @@ python get-legal-bert.py
 
 cd $ELECTER_DIR
 
-# Preprocess Data
+# Preprocess casetext dataset to generate vocab, t
+chmod a+x pre-experiment/preprocess-legal-data.sh
 ./pre-experiment/preprocess-legal-data.sh $LEGAL_DATA_DIR 0.9 1 true
 
 # Create triplets files
@@ -30,7 +31,7 @@ python $ELECTER_DIR/specter/data_utils/create_training_files.py \
 
 NUM_TRAIN_INSTANCES=`grep 'train' $EXPERIMENT_DATA_DIR/data-metrics.json | sed -r 's/^[^:]*:(.*)$/\1/' | sed 's/ //g' | sed 's/,//g'`
 
-model_out_dir="$ELECTER_HULK_DIR/$LEGAL_DATA_DIR/model-<code>-output-$MAX_SEQ_LENGTH"
+model_out_dir="$ELECTER_HULK_DIR/$LEGAL_DATA_DIR/model-output-$OUT_F"
 
 # Perform training
 rm -rf $model_out_dir && $ELECTER_DIR/scripts/run-exp-simple.sh -c $ELECTER_DIR/experiment_configs/simple.jsonnet \
