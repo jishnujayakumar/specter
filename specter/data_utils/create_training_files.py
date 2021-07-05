@@ -10,7 +10,7 @@ import pickle
 from time import time
 from typing import Dict, Optional, Tuple, List, Any
 
-import tqdm
+from tqdm import tqdm
 from allennlp.common import Params
 from allennlp.data import DatasetReader, TokenIndexer, Token, Instance
 from allennlp.data.fields import TextField, MetadataField
