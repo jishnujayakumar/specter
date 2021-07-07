@@ -46,8 +46,9 @@ chmod a+x run-pipeline.sh
 <train-percentage> \
 <sample-percentage> \
 <BERT_VARIANT> \
-<SAMPLES_PER_QUERY>
-# E.g. ./scripts/run-pipeline.sh legal-data .9 1 8192 legal-bert-base-uncased 10
+<SAMPLES_PER_QUERY> \
+<MARGIN_FRACTION>
+# E.g. ./scripts/run-pipeline.sh legal-data .9 1 8192 legal-bert-base-uncased 10 0.25
 ```
 
 ### 2. Running each step in the pipeline independently
