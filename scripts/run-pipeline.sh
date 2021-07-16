@@ -22,7 +22,7 @@ chmod a+x pre-experiment/preprocess-legal-data.sh
 ./pre-experiment/preprocess-legal-data.sh $LEGAL_DATA_DIR 0.9 1 true
 
 # Create triplets files
-python $ELECTER_DIR/specter/data_utils/create_training_files.py \
+python $ELECTER_DIR/$EMB_MODEL/data_utils/create_training_files.py \
 --data-dir $LEGAL_DATA_DIR/preProcessedData \
 --metadata $LEGAL_DATA_DIR/preProcessedData/metadata.json \
 --outdir $EXPERIMENT_DATA_DIR \
@@ -61,6 +61,7 @@ CUDA_VISIBLE_DEVICES=1 \
 python $ELECTER_DIR/scripts/embed.py \
 --ids $LEGAL_DATA_DIR/Gold-Score-Docs/gold-docs.txt \
 --model $model_out_dir/model.tar.gz \
+--model_type $EMB_MODEL \
 --metadata $LEGAL_DATA_DIR/Gold-Score-Docs/metadata.json \
 --cuda-device -1 \
 --batch-size 32 \

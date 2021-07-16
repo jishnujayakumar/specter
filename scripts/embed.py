@@ -24,6 +24,7 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--ids', help='path to the paper ids file to embed')
     parser.add_argument('--model', help='path to the model')
+    parser.add_argument('--model-type', help='specter or hecter')
     parser.add_argument('--metadata', help='path to the paper metadata')
     parser.add_argument('--output-file', help='path to the output file')
     parser.add_argument('--cuda-device', default=0, type=str)
@@ -34,7 +35,7 @@ def main():
 
     args = parser.parse_args()
 
-    overrides = f"{{'model':{{'predict_mode':'true','include_venue':'false'}},'dataset_reader':{{'type':'specter_data_reader','predict_mode':'true','paper_features_path':'{args.metadata}','included_text_fields': '{args.included_text_fields}'}},'vocabulary':{{'directory_path':'{args.vocab_dir}'}}}}"
+    overrides = f"{{'model':{{'predict_mode':'true','include_venue':'false'}},'dataset_reader':{{'type':'{args.model_type}_data_reader','predict_mode':'true','paper_features_path':'{args.metadata}','included_text_fields': '{args.included_text_fields}'}},'vocabulary':{{'directory_path':'{args.vocab_dir}'}}}}"
 
     command = [
         'python',

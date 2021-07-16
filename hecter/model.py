@@ -108,7 +108,7 @@ class BinaryLoss(nn.Module):
 
 
 
-@Model.register("specter")
+@Model.register("hecter")
 class Specter(Model):
 
     def __init__(self, vocab: Vocabulary,

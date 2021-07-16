@@ -30,7 +30,10 @@ eval set -- "$PARSED"
 NUM_EPOCHS=2
 lazy="true"
 batch_size=2
-bert_requires_grad='all'  #'pooler,11,10,9,8,7,6,5,4,3,2,1,0'
+# bert_requires_grad='all'  #'pooler,11,10,9,8,7,6,5,4,3,2,1,0'
+
+# finetune last 2 layers
+bert_requires_grad='pooler,11,10' #'all' or 'pooler,11,10,9,8,7,6,5,4,3,2,1,0'
 default_lr=2e-5
 
 num_train_instances=3000
