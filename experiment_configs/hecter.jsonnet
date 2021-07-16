@@ -21,7 +21,7 @@ local INCLUDE_VENUE=stringToBool(std.extVar('INCLUDE_VENUE'));
 local CUDA_DEVICE = std.extVar("CUDA_DEVICE");
 {
     "dataset_reader": {
-        "type": "specter_data_reader_pickled",
+        "type": "hecter_data_reader_pickled",
         "concat_title_abstract": false,
         "lazy": true,
         "max_sequence_length": MAX_SEQ_LEN,
@@ -42,7 +42,7 @@ local CUDA_DEVICE = std.extVar("CUDA_DEVICE");
         "cache_instances": true
     },
     "model": {
-        "type": "specter",
+        "type": "hecter",
         "abstract_encoder": {
             "type": "boe",
             "embedding_dim": 768
