@@ -39,7 +39,7 @@ model_out_dir="$ELECTER_HULK_DIR/$LEGAL_DATA_DIR/model-output-$OUT_FILE"
 
 # Perform training
 rm -rf $model_out_dir && $ELECTER_DIR/scripts/run-exp-simple.sh \
--c $ELECTER_DIR/experiment_configs/simple.jsonnet \
+-c $ELECTER_DIR/experiment_configs/$EMB_MODEL.jsonnet \
 -s $model_out_dir --num-epochs 100 --batch-size 4 \
 --train-path $EXPERIMENT_DATA_DIR/data-train.p \
 --dev-path $EXPERIMENT_DATA_DIR/data-val.p \
