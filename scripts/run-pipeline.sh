@@ -1,12 +1,15 @@
 # Setup necessary environment vars 
 export ELECTER_DIR=`pwd`
+export ELECTER_HULK_DIR=`/home/jishnu-paheli/HULK_JISHNU/ELECTER`
 export LEGAL_DATA_DIR=$1
 export MAX_SEQ_LENGTH=512
 export BERT_VARIANT=$4
+export SHB_BERT_VARIANT="distilbert-base-uncased"
 export SPQ=$5
 export MARGIN_FRACTION=$6
 export OUT_FILE="$BERT_VARIANT-SPQ-$SPQ-MF-$MARGIN_FRACTION"
 export EXPERIMENT_DATA_DIR="$LEGAL_DATA_DIR/preProcessedData/experimentData-$OUT_FILE"
+export EMB_MODEL="specter" # {specter, hecter}
 
 # Get legal-bert
 cd $ELECTER_DIR/pre-experiment/
@@ -59,7 +62,7 @@ python $ELECTER_DIR/scripts/embed.py \
 --ids $LEGAL_DATA_DIR/Gold-Score-Docs/gold-docs.txt \
 --model $model_out_dir/model.tar.gz \
 --metadata $LEGAL_DATA_DIR/Gold-Score-Docs/metadata.json \
---cuda-device 0 \
+--cuda-device -1 \
 --batch-size 32 \
 --output-file $LEGAL_DATA_DIR/embeddings-output-gold-docs.jsonl \
 --vocab-dir $LEGAL_DATA_DIR/legal-data-vocab/ \
