@@ -9,7 +9,7 @@ export SPQ=$5
 export MARGIN_FRACTION=$6
 export OUT_FILE="$BERT_VARIANT-SPQ-$SPQ-MF-$MARGIN_FRACTION"
 export EXPERIMENT_DATA_DIR="$LEGAL_DATA_DIR/preProcessedData/experimentData-$OUT_FILE"
-export EMB_MODEL="specter" # {specter, hecter}
+export EMB_MODEL=$7 # {specter, hecter}
 
 # Get legal-bert
 cd $ELECTER_DIR/pre-experiment/
@@ -41,7 +41,7 @@ model_out_dir="$ELECTER_HULK_DIR/$LEGAL_DATA_DIR/model-output-$OUT_FILE"
 rm -rf $model_out_dir && $ELECTER_DIR/scripts/run-exp-simple.sh \
 -c $ELECTER_DIR/experiment_configs/$EMB_MODEL.jsonnet \
 -s $model_out_dir --num-epochs 100 --batch-size 4 \
---train-path $EXPERIMENT_DATA_DIR/data-train.p \
+--train-path $EXPERIMENT_DATA_DIR/data-train.p \    
 --dev-path $EXPERIMENT_DATA_DIR/data-val.p \
 --num-train-instances $NUM_TRAIN_INSTANCES \
 --cuda-device 0 --max-seq-len $MAX_SEQ_LENGTH \
